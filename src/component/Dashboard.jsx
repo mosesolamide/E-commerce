@@ -5,7 +5,7 @@ export default function Dashboard() {
   
   const slides = [
     { img: "images/ads.png", alt: "Advertisement" },
-    { img: "images/ads2.png", alt: "Flash Sale" },
+    { img: "images/ads2.png", alt: "Flash Sale" }
   ]
 
   // Auto-advance slides
