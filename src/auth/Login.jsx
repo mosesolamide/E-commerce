@@ -1,0 +1,51 @@
+import React from "react"
+import { FcGoogle } from "react-icons/fc"
+import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { UserContext } from '../App'
+
+export default function Login(){
+    const { signup,handleChange,userData,signInWithEmail } = useContext(UserContext)
+    return(
+        <form className='flex flex-col justify-center items-center mt-10'>
+            <div className='mb-5'>
+                <h1 className='font-medium'>Login into Exclusive</h1>
+                <p className='text-[9px]'>Enter your details below</p>
+            </div>
+            <input 
+                type="email" 
+                placeholder='Email' 
+                className='border-b-1 w-[200px] mb-4 border-gray-400 text-[11px] py-3 outline-0' 
+                name="email"
+                onChange={handleChange}
+                value={userData.email}
+            />
+            <input 
+                type="password" 
+                placeholder='Password' 
+                autoComplete="new-password" 
+                className='border-b-1 w-[200px] mb-4 border-gray-400 text-[11px] py-3 outline-0' 
+                name="password"
+                onChange={handleChange}
+                value={userData.password}
+            />
+            <button
+                className='bg-[#DB4444] text-white w-[200px] py-2 mb-4 rounded-[2px]'
+                onClick={signInWithEmail}
+                type="button"
+             >
+                Login
+            </button>
+            <button
+                className='flex gap-4 items-center border-[1px] border-gray-300 
+                justify-center py-2 w-[200px] cursor-pointer rounded-[2px]'
+                onClick={signup}
+                type='button'
+            >
+                <FcGoogle />
+                <p>Sign in with Google</p>
+            </button>
+            <Link to="/forgot" className='text-[#DB4444] text-[8px] mt-1'>Forget Password?</Link>
+        </form>
+        )
+}
