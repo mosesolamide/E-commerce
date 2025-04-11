@@ -21,6 +21,7 @@ export default function SignUp() {
                 className='border-b-1 w-[200px] mb-4 border-gray-400 text-[11px] py-3 outline-0' 
                 value={userData.name} 
                 onChange={handleChange}
+                required
              />
             <input 
                 type="text" 
@@ -30,6 +31,7 @@ export default function SignUp() {
                 className='border-b-1 w-[200px] mb-4 border-gray-400 text-[11px] py-3 outline-0' 
                 value={userData.email} 
                 onChange={handleChange}
+                required
             />
             <input 
                 type="password" 
@@ -39,6 +41,7 @@ export default function SignUp() {
                 className='border-b-1 w-[200px] mb-4 border-gray-400 text-[11px] py-3 outline-0'
                 value={userData.password} 
                 onChange={handleChange}
+                required
             />
             <button 
                 className='bg-[#DB4444] text-white w-[200px] py-2 mb-4 rounded-[2px]'

@@ -5,13 +5,14 @@ import { useContext } from 'react'
 import { UserContext } from '../App'
 
 export default function Login(){
-    const { signup,handleChange,userData,signInWithEmail } = useContext(UserContext)
+    const { signup,handleChange,userData,signInWithEmail,errorMessage } = useContext(UserContext)
     return(
         <form className='flex flex-col justify-center items-center mt-10'>
             <div className='mb-5'>
                 <h1 className='font-medium'>Login into Exclusive</h1>
                 <p className='text-[9px]'>Enter your details below</p>
             </div>
+            <p className="my-2 text-red-600">{errorMessage}</p>
             <input 
                 type="email" 
                 placeholder='Email' 
@@ -45,7 +46,10 @@ export default function Login(){
                 <FcGoogle />
                 <p>Sign in with Google</p>
             </button>
-            <Link to="/forgot" className='text-[#DB4444] text-[8px] mt-1'>Forget Password?</Link>
+            <div className="flex justify-between w-[198px] items-center mt-1">
+                 <Link to="/forgot" className='text-[#DB4444] text-[8px] mt-1'>Forget Password?</Link>
+                 <Link to="/signup" className='font-medium border-b-1 text-[8px] text-gray-500'>Signup</Link>
+            </div>
         </form>
         )
 }

@@ -4,18 +4,18 @@ import { FaUserCircle } from "react-icons/fa"
 import { IoMdArrowDropright } from "react-icons/io"
 import { NavLink } from "react-router-dom"
 import { useContext } from 'react'
-import { UserContext } from '../App'
+import { UserContext } from '../../App'
 import { IoIosLogOut } from "react-icons/io"
 import { FiUser } from "react-icons/fi"
 import { MdOutlineCancel } from "react-icons/md"
 import { CiStar } from "react-icons/ci"
 import { PiHandbagThin } from "react-icons/pi"
 import { Link } from "react-router-dom"
+import { CiHeart } from "react-icons/ci"
 
 
 export default function Header(){
     const { user,signout,isUserOpen,setIsUserOpen } = useContext(UserContext)
-    // console.log(user.photoURL)
 
     const menuBar = () =>{
         document.getElementById("menuDropBar").classList.toggle("hidden")
@@ -71,10 +71,11 @@ export default function Header(){
                         </NavLink>
                     </li>
                 </ul>
-                <ul className="flex gap-2 items-center">
+                <ul className="flex gap-1 items-center">
                     <li><input type="search" className="bg-gray-100 text-[6px] md:text-[9px] py-[3px] w-[100px] md:w-[150px] rounded-[1px] indent-1.5" placeholder="What are you looking for?" /></li>
+                    <li className="cursor-pointer">{user? <CiHeart size={15}/> : ""}</li>
                     <li className="cursor-pointer">{user? <IoCartOutline size={15}/> : ""}</li>
-                    <li onClick={ () => setIsUserOpen(prev => !prev) } className="cursor-pointer text-red-500">
+                    <li onClick={ () => setIsUserOpen(prev => !prev) } className="cursor-pointer text-[#DB4444]">
                         {
                             user && user.photoURL ? 
                             <img src={user.photoURL} alt="your image" className="rounded-[50%] w-[15px] h-[15px]" /> 

@@ -1,6 +1,6 @@
 import React, {useState,createContext,useEffect} from 'react'
 import { Route ,Routes, useNavigate } from 'react-router-dom'
-import Layout from './layout/Layout'
+import Layout from './component/layout/Layout'
 import SignUp from './auth/SignUp'
 import Login from './auth/Login'
 import Dashboard from './component/Dashboard'
@@ -32,7 +32,8 @@ function App() {
 
   
   // state hooks
-  const [user,setUser] = useState(null)    
+  const [user,setUser] = useState(null) 
+  const [errorMessage,setErrorMessage] = useState(null)   
   const [userData,setUserData] = useState({
     name:"",
     password:"",
@@ -66,40 +67,97 @@ function App() {
   //signup with email and password
   const signUpWithEmail = async () => {
     try {
+      setErrorMessage(null); // Clear previous errors
+      // Validate inputs
+      if (!userData.email || !userData.password || !userData.name) {
+        throw new Error('All fields are required');
+      }
+  
+      if (userData.password.length < 6) {
+        throw new Error('Password must be at least 6 characters');
+      }
       // 1. Create user account
       const userCredential = await createUserWithEmailAndPassword(
         auth, 
         userData.email, 
         userData.password
       )
-      
-      // 2. Update profile with the user name (wait for this to complete)
+      //Update profile with the user name
       await updateProfile(auth.currentUser, {
         displayName: userData.name
       })
-  
-      // 3. Update state and show success
-      setUser(auth.currentUser)
-      alert("Account created successfully!")
+      //Update state and show success
+      setUser(auth.currentUser);
+      setErrorMessage(null); // Clear any errors on success
   
     } catch (error) {
-      console.error("Error:", error.message)
-      alert(`Error: ${error.message}`);
+      let errorMessage = 'Signup failed'
+      
+      // Firebase specific errors
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          errorMessage = 'Email already in use'
+          break
+        case 'auth/invalid-email':
+          errorMessage = 'Invalid email address'
+          break
+        case 'auth/weak-password':
+          errorMessage = 'Password is too weak'
+          break
+        case 'auth/operation-not-allowed':
+          errorMessage = 'Email/password accounts are not enabled'
+          break
+        default:
+          errorMessage = error.message || 'Signup failed'
+      }
+      setErrorMessage(errorMessage)
     }
   }
 
-  // sigin with email and password
-  const signInWithEmail = async () =>{
-    const result = await signInWithEmailAndPassword(auth,userData.email,userData.password)
-    setUser(result.user)
-    console.log(result.user.displayName)
-    .then((userCredential) => {  
-      alert("You have succesfully Login")
-    })
-    .catch((error) => {
-        console.error(error.message) 
-    })
-  } 
+  // signin with email and password
+  const signInWithEmail = async () => {
+    try {
+      setErrorMessage(null) // Clear previous errors
+      // Validate inputs
+      if (!userData.email || !userData.password) {
+        throw new Error('Email and password are required')
+      }
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        userData.password
+      )
+      setUser(userCredential.user)
+      setErrorMessage(null); // Clear any errors on success
+  
+    } catch (error) {
+      let errorMessage = 'Login failed'
+      
+      switch (error.code) {
+        case 'auth/invalid-email':
+          errorMessage = 'Invalid email address'
+          break
+        case 'auth/user-disabled':
+          errorMessage = 'Account disabled'
+          break
+        case 'auth/user-not-found':
+          errorMessage = 'User not found'
+          break
+        case 'auth/wrong-password':
+          errorMessage = 'Incorrect password'
+          break
+        case 'auth/too-many-requests':
+          errorMessage = 'Too many attempts. Try again later'
+          break
+        case 'auth/invalid-credential':
+          errorMessage = 'User dont have an account'
+          break
+        default:
+          errorMessage = error.message || 'Login failed'
+      }
+      setErrorMessage(errorMessage)
+    }
+  }
 
 
   //handleChange function
@@ -114,7 +172,7 @@ function App() {
   return (
     <UserContext.Provider value={{
       signup,signout,user,handleChange,userData,signUpWithEmail,
-      signInWithEmail,isUserOpen,setIsUserOpen
+      signInWithEmail,isUserOpen,setIsUserOpen,errorMessage
      }}
     >
       <Routes>
