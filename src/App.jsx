@@ -186,7 +186,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path='signup' element={<SignUp />} />
           <Route path='login' element={<Login />} />
-          <Route path='viewallproduct' element={<PreviewProduct />} />
+          <Route path='previewProduct/:id' element={<PreviewProduct />} />
         </Route>
       </Routes>
     </UserContext.Provider>
