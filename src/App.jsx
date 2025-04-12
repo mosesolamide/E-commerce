@@ -4,6 +4,7 @@ import Layout from './component/layout/Layout'
 import SignUp from './auth/SignUp'
 import Login from './auth/Login'
 import Dashboard from './component/Dashboard'
+import PreviewProduct from './component/PreviewProduct'
 import { auth,googleProvider } from './auth/firebase'
 import { 
   signInWithPopup,
@@ -13,6 +14,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile
   } from 'firebase/auth'
+  import { useLocation } from 'react-router-dom'
 
 export const UserContext = createContext()
 
@@ -21,14 +23,18 @@ function App() {
   const navigate = useNavigate()
 
     //listening for any changes if the user login or logout and direct them
-    useEffect( ()=>{
-        onAuthStateChanged(auth, (user) => {
-          setUser(user)
-          if(user) {
-            navigate("/")
-          } 
-        })
-    },[navigate])
+
+    const location = useLocation()
+
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        setUser(user)
+        // Only redirect to home if currently on login or signup
+        if (user && (location.pathname === "/login" || location.pathname === "/signup")) {
+          navigate("/")
+        }
+      })
+    }, [navigate, location])
 
   
   // state hooks
@@ -180,6 +186,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path='signup' element={<SignUp />} />
           <Route path='login' element={<Login />} />
+          <Route path='viewallproduct' element={<PreviewProduct />} />
         </Route>
       </Routes>
     </UserContext.Provider>

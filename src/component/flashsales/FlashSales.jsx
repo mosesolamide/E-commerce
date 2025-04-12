@@ -2,9 +2,10 @@ import React,{useEffect,useState} from "react"
 import {data} from './flashSale'
 import { CiHeart } from "react-icons/ci"
 import { FiEye } from "react-icons/fi"
+import { Link } from "react-router-dom"
 
 export default function FlashSale(){
-
+    const [hoveredIndex,setHoveredIndex] = useState(null)
  // Set the end date/time for the flash sale (e.g., 3 days from now)
  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
   
@@ -35,7 +36,7 @@ export default function FlashSale(){
 
   // Format numbers to always show 2 digits
   const formatNumber = (num) => num.toString().padStart(2, '0')
-  const products = data.slice(0,5)
+  const products = data.slice(0,)
 
     return(
         <section className="my-4">
@@ -70,19 +71,34 @@ export default function FlashSale(){
                 </div>
             </div>
             <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-6 mt-5">
-                {products.map( items => (
-                    <article className="relative">
-                        <div className="flex justify-center bg-[#F5F5F5] w-full py-6">
-                            <div className="w-[70px] h-[70px] ">
-                                <img src={`images/flash_sales/${items.img}`} alt="" className="w-full h-full object-contain" />  
-                            </div>
-                            <div className="flex justify-between w-[136px] absolute top-2">
-                                <span  className="text-[9px] bg-[#DB4444] px-[.3rem] py-[.2rem] text-white rounded-[2px] font-[200] h-[16px] flex items-center justify-center">{items.discount}%</span>
-                                <div className="flex flex-col gap-1">
-                                    <span className="bg-white rounded-[50%] p-[2px]"><CiHeart size={14}/></span>
-                                    <span className="bg-white rounded-[50%] p-[2px]"><FiEye size={14} /></span>
+                {products.map( (items,index) => (
+                    <article 
+                        className="relative"
+                        key={index}
+                    >
+                        <div 
+                            className="bg-[#F5F5F5] w-full py-6 rounded-[3px] mb-1 h-[135px]"
+                            onMouseEnter={() => setHoveredIndex(index)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                        >
+                            <div className="flex justify-center ">
+                                <div className="w-[70px] h-[70px] mb-3">
+                                    <img src={`images/flash_sales/${items.img}`} alt="" className="w-full h-full object-contain" />  
+                                </div>
+                                <div className="flex justify-between w-[136px] md:w-[160px] absolute top-2">
+                                    <span  className="text-[9px] bg-[#DB4444] px-[.3rem] py-[.2rem] text-white rounded-[2px] font-[200] h-[16px] flex items-center justify-center">{items.discount}%</span>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="bg-white rounded-[50%] p-[2px]"><CiHeart size={14}/></span>
+                                        <span className="bg-white rounded-[50%] p-[2px]"><FiEye size={14} /></span>
+                                    </div>
                                 </div>
                             </div>
+                            <button
+                                className={`bg-black text-white text-[9px] w-full
+                                 py-2 rounded-b-sm ${hoveredIndex !== index ? "hidden" : "" }`}
+                            >
+                                Add To Cart
+                            </button>
                         </div>
                         <div>
                             <h2 className="text-[9px] font-medium">{items.name}</h2>
@@ -95,7 +111,13 @@ export default function FlashSale(){
                 ))}
             </div>
             {/* View all flash sales products */}
-            <button className="bg-[#DB4444] text-white text-[9px] md:text-xs py-1 md:py-2 rounded-[2px] flex justify-center w-[140px] mx-auto my-4 cursor-pointer">View All Product</button>
+            <button 
+                className="bg-[#DB4444] text-white text-[9px] md:text-xs py-1 md:py-2 rounded-[2px] 
+                flex justify-center w-[140px] mx-auto my-4 cursor-pointer"
+                
+            >
+                View All Product
+            </button>
         </section>
     )
 }
