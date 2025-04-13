@@ -39,8 +39,8 @@ export default function FlashSale(){
   // Format numbers to always show 2 digits
   const formatNumber = (num) => num.toString().padStart(2, '0')
 
-  let number = allProductOpened? data.length : 5
-  const products = data.slice(0,number)
+  let numberOfPage = allProductOpened? data.length : 5
+  const products = data.slice(0,numberOfPage)
 
     return(
         <section className="my-4">
@@ -128,5 +128,3 @@ export default function FlashSale(){
         </section>
     )
 }
-
-// flex flex-wrap items-center justify-center
