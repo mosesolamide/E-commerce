@@ -68,7 +68,7 @@ export default function Dashboard() {
             >
                 <div>
                     <b className='text-[#00FF66] text-xs'>Categories</b>
-                    <h1 className='text-white text-3xl md:text-4xl font-medium my-4'>Enhance Your Music Experience</h1>
+                    <h1 className='text-white text-2xl md:text-4xl font-medium my-4'>Enhance Your Music Experience</h1>
                     <div className='flex gap-2 mb-5'>
                         <div className='w-10 h-10 bg-white rounded-[50%] flex flex-col items-center 
                              justify-center'
