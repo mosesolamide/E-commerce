@@ -39,7 +39,7 @@ export default function Dashboard() {
             <div className='hidden md:block border-l border-solid border-gray-300 h-[290px] ml-[20px]'></div>
           </div>
           
-          <div className='relative w-[80vw] h-[30vh] sm:h-[39vh] md:h-[48vh] lg:h-[54vh] mt-3'>
+          <div className='relative w-[75vw] sm:w-[80vw] h-[30vh] sm:h-[39vh] md:h-[48vh] lg:h-[54vh] mt-3'>
             {slides.map((slide, index) => (
               <div
                 key={index}
