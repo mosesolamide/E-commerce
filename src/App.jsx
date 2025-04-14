@@ -69,7 +69,6 @@ function App() {
       }
   }
 
-
   //signup with email and password
   const signUpWithEmail = async () => {
     try {

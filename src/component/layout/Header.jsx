@@ -87,7 +87,7 @@ export default function Header(){
                         <ul 
                             className={`absolute right-[3px] top-[39px] flex-col 
                             text-[0.5rem] md:text-[0.6rem] w-[115px] p-2 bg-black/30 backdrop-blur-md 
-                            text-white rounded-[2px] ${isUserOpen? "hidden" : "" }`}
+                            text-white rounded-[2px] z-50 ${isUserOpen? "hidden" : "" }`}
                         >
                             <li className="mb-3">
                                 <Link
