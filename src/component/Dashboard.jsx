@@ -21,7 +21,7 @@ export default function Dashboard() {
 
   return (
     <>
-        <div className='flex flex-col md:flex-row w-full justify-center items-center'>
+        <div className='flex flex-col md:flex-row justify-center items-center gap-5 w-full'>
           <div className='flex'>
             <nav>
               <ul className='grid grid-cols-3 md:grid-cols-1 text-[0.5em] md:text-[0.6] lg:text-[0.8em] gap-3 mt-2'>
@@ -39,7 +39,7 @@ export default function Dashboard() {
             <div className='hidden md:block border-l border-solid border-gray-300 h-[290px] ml-[20px]'></div>
           </div>
           
-          <div className='w-[80%] h-[280px] mt-[-20px] md:mt-[9px] md:ml-12 relative z-[-50]'>
+          <div className='relative w-[350px] h-[120px]'>
             {slides.map((slide, index) => (
               <div
                 key={index}
@@ -50,7 +50,7 @@ export default function Dashboard() {
                 <img 
                   src={slide.img} 
                   alt={slide.alt} 
-                  className='w-full h-full object-contain lg:object-cover'
+                  className='w-full h-full'
                 />
               </div>
             ))}

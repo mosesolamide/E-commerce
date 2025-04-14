@@ -44,7 +44,7 @@ export default function FlashSale(){
   const products = data.slice(0,numberOfPage)
 
     return(
-        <section className="my-4">
+        <section className="my-4"> 
             <div className="flex items-center gap-2">
                 <div className="w-[13px] h-[27px] bg-[#DB4444] rounded-[2px]"></div>
                 <span className="text-[#DB4444] font-medium text-sm">Today's</span>
