@@ -3,7 +3,7 @@ function applyDiscount(originalPrice, discountPercentage) {
     const decimalDiscount = discountPercentage / 100
     
     // Calculate new price
-    const newPrice = originalPrice * (1 - decimalDiscount)
+    const newPrice = Math.ceil(originalPrice * (1 - decimalDiscount))
     
     return newPrice
   }

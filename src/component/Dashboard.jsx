@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import FlashSale from './flashsales/FlashSales'
 import Categories from './Categories'
+import BestProducts from './best_product/BestProducts'
 
 export default function Dashboard() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -59,6 +60,7 @@ export default function Dashboard() {
         <hr className='my-7 md:my-14 text-black/50'/>
         <Categories />
         <hr className='my-7 md:my-14 text-black/50'/>
+        <BestProducts />
     </>
   )
 }

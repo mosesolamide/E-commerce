@@ -1,5 +1,5 @@
-import React,{useEffect,useState} from "react"
-import {data} from './flashSale'
+import React,{ useEffect,useState } from "react"
+import { data } from './flashSale'
 import { CiHeart } from "react-icons/ci"
 import { FiEye } from "react-icons/fi"
 import { Link } from "react-router-dom"
@@ -39,6 +39,7 @@ export default function FlashSale(){
   // Format numbers to always show 2 digits
   const formatNumber = (num) => num.toString().padStart(2, '0')
 
+  //logic for viewing more products   
   let numberOfPage = allProductOpened? data.length : 5
   const products = data.slice(0,numberOfPage)
 
