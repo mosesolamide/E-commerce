@@ -12,7 +12,7 @@ export default function Explore(){
   let numberOfPage = allProductOpened? data.length : 5
   const products = data.slice(0,numberOfPage)
 
-    return(
+    return (
         <section className="my-6"> 
             <div className="flex items-center gap-2">
                 <div className="w-[13px] h-[27px] bg-[#DB4444] rounded-[2px]"></div>
