@@ -9,7 +9,7 @@ export default function NewArrival(){
                 <span className="text-[#DB4444] font-medium text-sm">Featured</span>
             </div>
             <h1 className="my-4 font-bold text-xs md:text-xl">New Arrival</h1>
-            <div className='grid grid-rows-[repeat(3,200px)] sm:grid-rows-[repeat(2,150px)] grid-cols-2 sm:grid-cols-4 gap-2 text-white max-w-[1000px] mx-auto'>
+            <div className='grid grid-rows-[repeat(3,200px)] sm:grid-rows-[repeat(2,160px)] grid-cols-2 sm:grid-cols-4 gap-2 text-white max-w-[1050px] mx-auto'>
                 <div className='bg-[#0D0D0D] pt-5 relative col-span-2 sm:row-span-2  rounded-[3px]'>
                     <img src="images/newArrival/one.png" alt="img of ps5" className='object-contain w-full h-full' />
                     <div className='w-[190px] absolute top-24 sm:top-48 right-0 left-8 bottom-0'>

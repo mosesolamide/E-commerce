@@ -46,6 +46,7 @@ export default function Header(){
                             Home
                         </NavLink>
                     </li>
+
                     <li className="mb-1 md:m-0">
                         <NavLink
                             className={({ isActive }) => (isActive ? 'md:border-b-[1.8px] border-gray-300' : '')} 
@@ -54,6 +55,7 @@ export default function Header(){
                             Contact
                         </NavLink>
                     </li>
+                    
                     <li className="mb-1 md:m-0">
                          <NavLink 
                             className={({ isActive }) => (isActive ? 'md:border-b-[1.8px] border-gray-300' : '')} 

@@ -5,6 +5,8 @@ import SignUp from './auth/SignUp'
 import Login from './auth/Login'
 import Dashboard from './component/Dashboard'
 import PreviewProduct from './component/PreviewProduct'
+import About from './component/About'
+import ContactUs from './component/ContactUs'
 import { auth,googleProvider } from './auth/firebase'
 import { 
   signInWithPopup,
@@ -186,6 +188,8 @@ function App() {
           <Route path='signup' element={<SignUp />} />
           <Route path='login' element={<Login />} />
           <Route path='previewProduct/:id' element={<PreviewProduct />} />
+          <Route path='/contact' element={<ContactUs />} />
+          <Route path='/about' element={<About/>} />
         </Route>
       </Routes>
     </UserContext.Provider>
