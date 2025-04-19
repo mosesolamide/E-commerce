@@ -30,11 +30,14 @@ export default function ContactUs(){
                 </ul>
             </div>
             <div className="bg-white shadow-sm p-5">
-                <form action="" className="grid grid-cols-3 grid-rows-[repeat(3,minmax(50px,50px))] gap-4 ">
+                <form 
+                    action="" 
+                    className="grid grid-cols-1 sm:grid-cols-3 grid-rows-[repeat(3,minmax(50px,50px))] gap-4"
+                >
                     <input type="text" className="bg-[#F5F5F5] indent-4 text-sm" placeholder="Your name" />
                     <input type="text" className="bg-[#F5F5F5] indent-4 text-sm" placeholder="Your Email" />
                     <input type="text" className="bg-[#F5F5F5] indent-4 text-sm" placeholder="Your Phone" />
-                    <textarea name="" id="" className="bg-[#F5F5F5] col-span-3 row-span-3 indent-4 py-2 text-sm resize-none" placeholder="Your message"></textarea>
+                    <textarea name="" id="" className="bg-[#F5F5F5] sm:col-span-3 sm:row-span-3 indent-4 py-2 text-sm resize-none" placeholder="Your message"></textarea>
                 </form>
                 <button 
                     className="text-white bg-[#DB4444] rounded-[2px] mt-4 px-4 py-2"
