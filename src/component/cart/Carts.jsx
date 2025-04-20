@@ -11,7 +11,7 @@ export default function Carts(){
             loading ? (
                     <div className='flex justify-center items-center h-[50vh] gap-2'>
                         <span className='w-[35px] h-[35px] border-[5px] border-black border-solid border-b-transparent rounded-[50%] inline-block box-border animate-spin'></span> <br />
-                        <p className='text-2xl'>Hold While Your Cart is Loading...</p>
+                        <p className='text-sm sm:text-md md:text-2xl'>Hold While Your Cart is Loading...</p>
                     </div>
             ): cart.length === 0 && user ? (
                 <div className='flex flex-col justify-center items-center h-[50vh]'>
@@ -22,11 +22,11 @@ export default function Carts(){
                     </div>
                 </div>
             ) :(
-                <table className='max-w-[800px] mx-auto mt-6'>
+                <table className='max-w-[900px] mx-auto mt-6'>
                     <thead className=''>
                         <tr 
-                            className='w-[410px] sm:w-[580px] md:w-[620px] lg:w-[800px] grid grid-cols-4
-                            justify-between place-items-center text-[9px] py-3 shadow-sm rounded-[2px]'
+                            className='grid grid-cols-4
+                            justify-between place-items-center text-[7px] md:text-[9px] py-3 shadow-sm rounded-[2px]'
                         >
                             <td>Product</td>
                             <td>Price</td>
@@ -49,9 +49,3 @@ export default function Carts(){
             )
     )
 }
-
-
-// : cart.length === 0 ?(
-
-// )
-// :
