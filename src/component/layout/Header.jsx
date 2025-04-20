@@ -12,7 +12,7 @@ import { PiHandbagThin } from "react-icons/pi"
 
 
 export default function Header(){
-    const { user,signout,isUserOpen,setIsUserOpen } = useContext(UserContext)
+    const { user,signout,isUserOpen,setIsUserOpen,cart } = useContext(UserContext)
 
     const menuBar = () =>{
         document.getElementById("menuDropBar").classList.toggle("hidden")
@@ -72,8 +72,23 @@ export default function Header(){
                 </ul>
                 <ul className="flex gap-1 items-center">
                     <li><input type="search" className="bg-gray-100 text-[6px] md:text-[9px] py-[3px] w-[100px] md:w-[150px] rounded-[1px] indent-1.5" placeholder="What are you looking for?" /></li>
-                    <li className="cursor-pointer">{user? <CiHeart className="text-[15px] sm:text-[20px] md:text-[25px]"/> : ""}</li>
-                    <li className="cursor-pointer"><Link to='/carts'>{user? <IoCartOutline className="text-[15px] sm:text-[20px] md:text-[25px]"/> : ""}</Link></li>
+                    <li className="cursor-pointer">
+                        {user? <CiHeart className="text-[15px] sm:text-[20px] md:text-[25px]"/> : ""}
+                    </li>
+                    <li className="cursor-pointer relative">
+                        <Link to='/carts'>
+                            {user? 
+                                <IoCartOutline className="text-[15px] sm:text-[20px] md:text-[25px]"/> :
+                                ""
+                            }
+                        </Link>
+                        <span 
+                            className="bg-[#DB4444] text-white text-[8px] md:text-[10px] rounded-[50%]
+                             w-[10px] md:w-[13px] h-[10px] md:h-[13px] absolute top-[-4px] md:top-0 right-[-2px] md:right-0 flex justify-center"
+                        >
+                            {cart.length}
+                        </span>
+                    </li>
                     <li onClick={ () => setIsUserOpen(prev => !prev) } className="cursor-pointer text-[#DB4444]">
                         {
                             user && user.photoURL ? 

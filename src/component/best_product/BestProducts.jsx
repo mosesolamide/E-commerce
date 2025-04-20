@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { data } from './BestProduct'
 import { Link } from 'react-router-dom'
 import { CiHeart } from "react-icons/ci"
 import { FiEye } from "react-icons/fi"
+import { UserContext } from '../../App'
 
 export default function BestProducts(){
-
+    const { addCart } = useContext(UserContext)
     const [hoveredIndex,setHoveredIndex] = useState(null)
     const [allProductOpened,setAllProductOpened] = useState(false)
 
@@ -32,12 +33,7 @@ export default function BestProducts(){
                 </div>
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-6 mt-5">
                     {products.map( (items,index) => (
-                        <Link
-                            to={`/previewProduct/${items.id}`}
-                            state={items}
-                            key={index}
-                        >
-                            <article className="relative">
+                            <article className="relative" key={index || items.id}>
                                 <div 
                                     className="bg-[#F5F5F5] w-full py-6 rounded-[3px] mb-1 h-[135px]"
                                     onMouseEnter={() => setHoveredIndex(index)}
@@ -58,6 +54,7 @@ export default function BestProducts(){
                                     <button
                                         className={`bg-black text-white text-[9px] w-full
                                         py-2 rounded-b-sm md:${hoveredIndex !== index ? "hidden" : "" }`}
+                                        onClick={() => addCart(items,"bestSell")}
                                     >
                                         Add To Cart
                                     </button>
@@ -70,7 +67,6 @@ export default function BestProducts(){
                                     </div>
                                 </div>
                             </article>
-                        </Link>
                     ))}
                 </div>
             </div>

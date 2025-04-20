@@ -1,4 +1,4 @@
-import React, {useState,createContext,useEffect,useMemo} from 'react'
+import React, {useState,createContext,useEffect,useCallback} from 'react'
 import { Route ,Routes, useNavigate } from 'react-router-dom'
 import Layout from './component/layout/Layout'
 import SignUp from './auth/SignUp'
@@ -9,7 +9,7 @@ import About from './component/About'
 import ContactUs from './component/ContactUs'
 import { auth,googleProvider } from './auth/firebase'
 import { useLocation } from 'react-router-dom'
-import Carts from './component/Carts'
+import Carts from './component/cart/Carts'
 import { 
   signInWithPopup,
   onAuthStateChanged,
@@ -18,12 +18,16 @@ import {
   signInWithEmailAndPassword,
   updateProfile
   } from 'firebase/auth'
+import { addDoc, collection, onSnapshot, query, where } from "firebase/firestore"
+import { db } from './auth/firebase'
 
 export const UserContext = createContext()
 
 function App() {
   const navigate = useNavigate()
-      // state hooks
+// state hooks
+  const [cart,setCart] = useState([])
+  const [loading, setLoading] = useState(false)
   const [user,setUser] = useState(null) 
   const [errorMessage,setErrorMessage] = useState(null)   
   const [userData,setUserData] = useState({
@@ -173,10 +177,59 @@ function App() {
     }))
 }
 
+// addcart
+const addCart = useCallback ( async (item,imagePath) =>{
+        if (!user) {
+            navigate('/login')
+            return
+        }
+        try {
+            await addDoc(collection(db, "carts"), {
+            product: item, 
+            uid: user.uid,
+            imagePath:imagePath,
+            quantity: 1,
+            createdAt: new Date()
+            })
+            alert("Successfully Added To Cart")
+        } catch (e) {
+            console.error("Error adding to cart:", e)
+        }
+    },[user,navigate])
+
+// carts
+    useEffect(() => {
+        if (!user || !user.uid) {
+          setCart([])
+          setLoading(true)
+          return
+        }
+    
+        const cartsRef = collection(db, "carts")
+        const q = query(cartsRef, where("uid", "==", user.uid))
+    
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const cartItem = [];
+          querySnapshot.forEach((doc) => {
+            cartItem.push({
+              id: doc.id,
+              ...doc.data()
+            })
+          })
+    
+          // Set the state with the unique items (this will reset and overwrite cart items)
+          setCart(cartItem)
+          setLoading(false)
+        })
+    
+        // Cleanup listener on component unmount
+        return () => unsubscribe()
+      }, [user])
+
   return (
     <UserContext.Provider value={{
       signup,signout,user,handleChange,userData,signUpWithEmail,
-      signInWithEmail,isUserOpen,setIsUserOpen,errorMessage
+      signInWithEmail,isUserOpen,setIsUserOpen,errorMessage,addCart,cart,loading
      }}
     >
       <Routes>

@@ -1,15 +1,11 @@
 import React, { useEffect, useState, useContext, useCallback, useMemo } from "react"
 import { data } from './flashSale'
-import { Link, useNavigate } from "react-router-dom"    
-import { addDoc, collection } from "firebase/firestore"
-import { db } from "../../auth/firebase"
 import { UserContext } from "../../App"
 import Product from "./Product"
 
 
 export default function FlashSale(){
-    const navigate = useNavigate()
-    const { user } = useContext(UserContext)
+    const { addCart } = useContext(UserContext)
     const [hoveredIndex,setHoveredIndex] = useState(null)
     const [allProductOpened,setAllProductOpened] = useState(false)
     // Set the end date/time for the flash sale (e.g., 3 days from now)
@@ -46,26 +42,6 @@ export default function FlashSale(){
 
     // Format numbers to always show 2 digits
     const formatNumber = (num) => num.toString().padStart(2, '0')
-
-    // console.log(user?.uid)
-
-    const addCart = useCallback ( async (item,imagePath) =>{
-        if (!user) {
-            navigate('/login')
-            return
-        }
-        try {
-            await addDoc(collection(db, "carts"), {
-            product: item, 
-            uid: user.uid,
-            imagePath:imagePath,
-            createdAt: new Date()
-            })
-            alert("Successfully Added To Cart")
-        } catch (e) {
-            console.error("Error adding to cart:", e)
-        }
-    },[user,navigate])
 
     const handleMouseEnter = useCallback((index) => {
         setHoveredIndex(index);
@@ -110,7 +86,7 @@ export default function FlashSale(){
             <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-6 mt-5">
                 {products.map( (item,index) => (
                     <Product 
-                        key={index}
+                        key={index || item.id}
                         item={item}
                         isHovered={hoveredIndex === index}
                         onMouseEnter={() => handleMouseEnter(index)}
