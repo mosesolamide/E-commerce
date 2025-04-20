@@ -26,7 +26,7 @@ export default function Carts(){
                     <thead className=''>
                         <tr 
                             className='grid grid-cols-4
-                            justify-between place-items-center text-[7px] md:text-[9px] py-3 shadow-sm rounded-[2px]'
+                            justify-between place-items-center text-[7px] md:text-[9px] font-medium py-3 shadow-sm rounded-[2px]'
                         >
                             <td>Product</td>
                             <td>Price</td>
