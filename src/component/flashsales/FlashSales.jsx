@@ -1,47 +1,79 @@
-import React,{ useEffect,useState } from "react"
+import React, { useEffect, useState, useContext, useCallback, useMemo } from "react"
 import { data } from './flashSale'
-import { CiHeart } from "react-icons/ci"
-import { FiEye } from "react-icons/fi"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"    
+import { addDoc, collection } from "firebase/firestore"
+import { db } from "../../auth/firebase"
+import { UserContext } from "../../App"
+import Product from "./Product"
+
 
 export default function FlashSale(){
- const [hoveredIndex,setHoveredIndex] = useState(null)
- const [allProductOpened,setAllProductOpened] = useState(false)
+    const navigate = useNavigate()
+    const { user } = useContext(UserContext)
+    const [hoveredIndex,setHoveredIndex] = useState(null)
+    const [allProductOpened,setAllProductOpened] = useState(false)
+    // Set the end date/time for the flash sale (e.g., 3 days from now)
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
+    //logic for viewing more products   
+    const products = useMemo(() => {
+        const count = allProductOpened ? data.length : 5;
+        return data.slice(0, count);
+    }, [allProductOpened])
+    
+    function calculateTimeLeft() {
+    // Set your flash sale end date (year, month-1, day, hour, minute)
+    const flashSaleEnd = new Date()
+    flashSaleEnd.setDate(flashSaleEnd.getDate() + 3) // 3 days from now
+    flashSaleEnd.setHours(23, 59, 59, 0) // End at 11:59:59 PM
 
- // Set the end date/time for the flash sale (e.g., 3 days from now)
- const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
-  
- function calculateTimeLeft() {
-   // Set your flash sale end date (year, month-1, day, hour, minute)
-   const flashSaleEnd = new Date()
-   flashSaleEnd.setDate(flashSaleEnd.getDate() + 3) // 3 days from now
-   flashSaleEnd.setHours(23, 59, 59, 0) // End at 11:59:59 PM
-   
-   const difference = flashSaleEnd - new Date()
-   
-   return {
-     days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-     hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-     minutes: Math.floor((difference / 1000 / 60) % 60),
-     seconds: Math.floor((difference / 1000) % 60),
-     totalSeconds: Math.floor(difference / 1000)
-   }
- }
+    const difference = flashSaleEnd - new Date()
+        
+        return {
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((difference / 1000 / 60) % 60),
+            seconds: Math.floor((difference / 1000) % 60),
+            totalSeconds: Math.floor(difference / 1000)
+        }
+    }
+        useEffect(() => {
+        const timer = setInterval(() => {
+        setTimeLeft(calculateTimeLeft())
+        }, 1000)
 
-    useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft())
-    }, 1000)
+        return () => clearInterval(timer)
+    }, [])
 
-    return () => clearInterval(timer)
-  }, [])
+    // Format numbers to always show 2 digits
+    const formatNumber = (num) => num.toString().padStart(2, '0')
 
-  // Format numbers to always show 2 digits
-  const formatNumber = (num) => num.toString().padStart(2, '0')
+    // console.log(user?.uid)
 
-  //logic for viewing more products   
-  let numberOfPage = allProductOpened? data.length : 5
-  const products = data.slice(0,numberOfPage)
+    const addCart = useCallback ( async (item,imagePath) =>{
+        if (!user) {
+            navigate('/login')
+            return
+        }
+        try {
+            await addDoc(collection(db, "carts"), {
+            product: item, 
+            uid: user.uid,
+            imagePath:imagePath,
+            createdAt: new Date()
+            })
+            alert("Successfully Added To Cart")
+        } catch (e) {
+            console.error("Error adding to cart:", e)
+        }
+    },[user,navigate])
+
+    const handleMouseEnter = useCallback((index) => {
+        setHoveredIndex(index);
+      }, [])
+    
+      const handleMouseLeave = useCallback(() => {
+        setHoveredIndex(null);
+      }, [])
 
     return(
         <section className="my-4"> 
@@ -76,46 +108,15 @@ export default function FlashSale(){
                 </div>
             </div>
             <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-6 mt-5">
-                {products.map( (items,index) => (
-                    <Link
-                        to={`/previewProduct/${items.id}`}
-                        state={items}
+                {products.map( (item,index) => (
+                    <Product 
                         key={index}
-                    >
-                        <article className="relative">
-                            <div 
-                                className="bg-[#F5F5F5] w-full py-6 rounded-[3px] mb-1 h-[135px]"
-                                onMouseEnter={() => setHoveredIndex(index)}
-                                onMouseLeave={() => setHoveredIndex(null)}
-                            >
-                                <div className="flex justify-center ">
-                                    <div className="w-[70px] h-[70px] mb-3">
-                                        <img src={`images/flash_sales/${items.img}`} alt="" className="w-full h-full object-contain" />  
-                                    </div>
-                                    <div className="flex justify-between w-[135px] md:w-[140px] lg:w-[170px] absolute top-2">
-                                        <span  className="text-[9px] bg-[#DB4444] px-[.3rem] py-[.2rem] text-white rounded-[2px] font-[200] h-[16px] flex items-center justify-center">{items.discount}%</span>
-                                        <div className="flex flex-col gap-1">
-                                            <span className="bg-white rounded-[50%] p-[2px]"><CiHeart size={14}/></span>
-                                            <span className="bg-white rounded-[50%] p-[2px]"><FiEye size={14} /></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button
-                                    className={`bg-black text-white text-[9px] w-full
-                                    py-2 rounded-b-sm md:${hoveredIndex !== index ? "hidden" : "" }`}
-                                >
-                                    Add To Cart
-                                </button>
-                            </div>
-                            <div>
-                                <h2 className="text-[9px] font-medium">{items.name}</h2>
-                                <div className="flex gap-3 text-[8px]">
-                                    <span className="text-[#DB4444]">${items.discountPrice}</span>
-                                    <span className="line-through text-black/50">${items.normalPrice}</span>   
-                                </div>
-                            </div>
-                        </article>
-                    </Link>
+                        item={item}
+                        isHovered={hoveredIndex === index}
+                        onMouseEnter={() => handleMouseEnter(index)}
+                        onMouseLeave={handleMouseLeave}
+                        onAddCart={addCart}
+                    />
                 ))}
             </div>
             {/* View all flash sales products */}
