@@ -15,7 +15,8 @@ const Product = memo(({item,id}) => {
 
     return(
         <tr
-            className=' grid grid-cols-4 justify-between place-items-center text-[8px] md:text-[9px] font-medium py-3 px-3 shadow-sm rounded-[2px] mt-6'
+            className=' grid grid-cols-4 justify-between place-items-center text-[8px] md:text-[9px] 
+            font-medium py-3 px-3 shadow-sm rounded-[2px] mt-6'
         >
             <td className='flex items-center gap-1'>
                 <img src={`images/${item.imagePath}/${item.product.img}`} alt="image of product" className='w-[15px] sm:w-[17px] md:w-[20px]' />
