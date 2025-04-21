@@ -1,6 +1,7 @@
 import React, { memo, useCallback } from 'react'
-import { doc, updateDoc } from "firebase/firestore"
+import { doc, updateDoc ,deleteDoc } from "firebase/firestore"
 import { db } from '../../auth/firebase'
+import { MdOutlineDelete } from "react-icons/md"
 
 const Product = memo(({item,id}) => {
 
@@ -12,6 +13,10 @@ const Product = memo(({item,id}) => {
                 quantity: newQuantity
         })
     },[item])
+
+    const deleteItem = async (docId) =>{
+        await deleteDoc(doc(db, "carts", docId))
+    }
 
     return(
         <tr
@@ -38,7 +43,12 @@ const Product = memo(({item,id}) => {
                     +
                 </button>
             </td>
-            <td>${(item.product.discountPrice || item.product.normalPrice) * item.quantity}</td>
+            <td 
+                className='flex items-center gap-2 ml-8'
+            >
+                ${(item.product.discountPrice || item.product.normalPrice) * item.quantity} 
+                <span onClick={ () => deleteItem(id) }><MdOutlineDelete size={15} className='text-red-600 cursor-pointer' /></span>
+            </td>
         </tr>
     )
 })

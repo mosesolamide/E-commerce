@@ -64,7 +64,7 @@ export default function Carts(){
                             <input type="text" placeholder='Coupon Code' className='border border-black/50 rounded-[2px] indent-2 w-[180px] h-[40px]' />
                             <button className='bg-[#DB4444] px-4 py-2 text-white rounded-[4px] text-xs h-[40px]'>Apply Coupon</button>
                         </div>
-                        <div className='mt-5 md:mt-0 w-[350px]'>
+                        <div className='mt-5 md:mt-0 w-[300px] sm:w-[350px]'>
                             <div className='border p-3 rounded-[2px] text-center'>
                                 <h1 className='mb-3'>Cart Total</h1>
                                 <div className='flex justify-between text-xs font-[400]'>
