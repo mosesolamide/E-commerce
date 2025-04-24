@@ -12,8 +12,8 @@ export default function Last(){
                 <TbTruckDelivery size={20} className='text-white'/>
                 </div>
             </div>
-            <span className='text-[7px] font-bold'>FREE AND FAST DELIVERY</span>
-            <p className='text-[6px]'>Free delivery for all orders over $140</p>
+            <span className='text-xs md:text-sm font-medium'>FREE AND FAST DELIVERY</span>
+            <p className='text-xs'>Free delivery for all orders over $140</p>
             </div>
             <div className='flex flex-col items-center gap-2'>
             <div className='rounded-[50%] bg-[#b8b8b8] w-[45px] h-[45px] flex justify-center items-center'>
@@ -21,8 +21,8 @@ export default function Last(){
                 <MdSupportAgent size={20} className='text-white'/>
                 </div>
             </div>
-            <span className='text-[7px] font-bold'>24/7 CUSTOMER SERVICE</span>
-            <p className='text-[6px]'>Friendly 24/7 customer support</p>
+            <span className='text-xs md:text-sm font-medium'>24/7 CUSTOMER SERVICE</span>
+            <p className='text-xs'>Friendly 24/7 customer support</p>
             </div>
             <div className='flex flex-col items-center gap-2'>
             <div className='rounded-[50%] bg-[#b8b8b8] w-[45px] h-[45px] flex justify-center items-center'>
@@ -30,8 +30,8 @@ export default function Last(){
                 <SiAdguard size={20} className='text-white'/>
                 </div>
             </div>
-            <span className='text-[7px] font-bold'>MONEY BACK GUARANTEE</span>
-            <p className='text-[6px]'>We return money within 30days</p>
+            <span className='text-xs md:text-sm font-medium'>MONEY BACK GUARANTEE</span>
+            <p className='text-xs'>We return money within 30days</p>
             </div>
         </div>
     )
