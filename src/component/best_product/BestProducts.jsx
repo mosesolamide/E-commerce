@@ -21,10 +21,10 @@ export default function BestProducts() {
             </div>
             
             <div className="flex justify-between items-center mt-4 mb-6">
-                <h1 className="text-lg md:text-2xl font-bold">Best Selling Products</h1>
+                <h1 className="text-xs md:text-2xl font-bold">Best Selling Products</h1>
                 <button 
-                    className="bg-red-600 text-white text-xs md:text-sm py-2 px-4 md:px-6 rounded-sm
-                    hover:bg-red-700 transition-colors"
+                    className="bg-red-600 text-white text-xs md:text-sm py-2 px-6 rounded-sm
+            hover:bg-red-700 transition-colors"
                     onClick={() => setAllProductOpened(prev => !prev)}
                 >
                     {!allProductOpened ? "View All Products" : "Show Less"}
@@ -45,7 +45,7 @@ export default function BestProducts() {
                             </span>
 
                             {/* Product image */}
-                            <div className="flex justify-center h-full">
+                            <div className="flex justify-center h-full ">
                                 <div className="w-16 h-16 md:w-20 md:h-20 flex items-center">
                                     <img 
                                         src={`images/bestSell/${items.img}`} 

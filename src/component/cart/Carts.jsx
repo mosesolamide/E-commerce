@@ -62,7 +62,7 @@ export default function Carts(){
                     <div className='mt-6 flex flex-col justify-center items-center md:flex-row md:justify-around gap-2 w-full'>
                         <div className='flex gap-3'>
                             <input type="text" placeholder='Coupon Code' className='border border-black/50 rounded-[2px] indent-2 w-[180px] h-[40px]' />
-                            <button className='bg-[#DB4444] px-4 py-2 text-white rounded-[4px] text-xs h-[40px]'>Apply Coupon</button>
+                            <button className='bg-red-600 px-4 py-2 text-white rounded-[4px] text-xs h-[40px]'>Apply Coupon</button>
                         </div>
                         <div className='mt-5 md:mt-0 w-[300px] sm:w-[350px]'>
                             <div className='border p-3 rounded-[2px] text-center'>
@@ -82,7 +82,7 @@ export default function Carts(){
                                     <span>${totalPrice}</span>
                                 </div>
                                 <button 
-                                    className='bg-[#DB4444] px-4 py-2 text-white rounded-[4px] text-xs h-[40px] mt-5'
+                                    className='bg-red-600 px-4 py-2 text-white rounded-[4px] text-xs h-[40px] mt-5'
                                 >
                                     Process to checkout
                                 </button>

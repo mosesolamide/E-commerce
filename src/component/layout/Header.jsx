@@ -30,7 +30,7 @@ export default function Header(){
                     < IoIosMenu size={15}/>
                 </span>
                 <ul 
-                    className="hidden absolute top-8 md:top-0  px-2 py-1 rounded-[2px] 
+                    className="hidden absolute top-8 md:top-0  px-2 py-1 rounded-2 
                     bg-gray-100 md:bg-white md:sticky md:flex md:gap-6 md:items-center text-xs md:text-sm font-medium" 
                     id="menuDropBar"
                 >
