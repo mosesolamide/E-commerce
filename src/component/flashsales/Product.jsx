@@ -2,7 +2,7 @@ import React, { memo } from "react"
 import { CiHeart } from "react-icons/ci"
 import { FiEye } from "react-icons/fi"
 
-const Product = memo(({ item, isHovered, onMouseEnter, onMouseLeave, onAddCart }) => {
+const Product = memo(({ item, isHovered, onMouseEnter, onMouseLeave, onAddCart, user, goToLogin, addWishList }) => {
     return (
         <article className="relative">
             <div 
@@ -23,7 +23,10 @@ const Product = memo(({ item, isHovered, onMouseEnter, onMouseLeave, onAddCart }
                             {item.discount}%
                         </span>
                         <div className="flex flex-col gap-1">
-                            <span className="bg-white rounded-[50%] p-[2px]">
+                            <span 
+                                className="bg-white rounded-[50%] p-[2px] cursor-pointer shadow-sm"
+                                onClick={ () => addWishList(item,"flash_sales")}
+                            >
                                 <CiHeart size={14}/>
                             </span>
                             <span className="bg-white rounded-[50%] p-[2px]">
@@ -36,16 +39,16 @@ const Product = memo(({ item, isHovered, onMouseEnter, onMouseLeave, onAddCart }
                     className={`bg-black text-white text-[9px] w-full py-2 rounded-b-sm cursor-pointer md:${
                         !isHovered ? "hidden" : ""
                     }`}
-                    onClick={() => onAddCart(item,"flash_sales")}
+                    onClick={() => user? onAddCart(item,"flash_sales"): goToLogin()}
                 >
                     Add To Cart
                 </button>
             </div>
             <div>
-                <h2 className="text-[9px] font-medium">{item.name}</h2>
+                <h2 className="text-xs md:text-sm font-medium line-clamp-1">{item.name}</h2>
                 <div className="flex gap-3 text-[8px]">
-                    <span className="text-[#DB4444]">${item.discountPrice}</span>
-                    <span className="line-through text-black/50">${item.normalPrice}</span>   
+                    <span className="text-red-600 text-xs md:text-sm">${item.discountPrice}</span>
+                    <span className="text-gray-400 text-xs line-through">${item.normalPrice}</span>   
                 </div>
             </div>
         </article>

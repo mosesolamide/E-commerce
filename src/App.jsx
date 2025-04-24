@@ -7,6 +7,7 @@ import Dashboard from './component/Dashboard'
 import PreviewProduct from './component/PreviewProduct'
 import About from './component/About'
 import ContactUs from './component/ContactUs'
+import Wishlist from './WishList.jsx/WishList'
 import { auth,googleProvider } from './auth/firebase'
 import { useLocation } from 'react-router-dom'
 import Carts from './component/cart/Carts'
@@ -29,7 +30,8 @@ function App() {
   const [cart,setCart] = useState([])
   const [loading, setLoading] = useState(false)
   const [user,setUser] = useState(null) 
-  const [errorMessage,setErrorMessage] = useState(null)   
+  const [errorMessage,setErrorMessage] = useState(null)
+  const [wishlist, setWishList] = useState([])   
   const [userData,setUserData] = useState({
     name:"",
     password:"",
@@ -197,6 +199,25 @@ const addCart = useCallback ( async (item,imagePath) =>{
         }
     },[user,navigate])
 
+    //addWishList
+    const addWishList = useCallback ( async (item,imagePath) =>{
+      if (!user) {
+          navigate('/login')
+          return
+      }
+      try {
+          await addDoc(collection(db, "wishlist"), {
+          product: item, 
+          uid: user.uid,
+          imagePath:imagePath,
+          createdAt: new Date()
+          })
+          alert("Successfully Added To Wishlist")
+      } catch (e) {
+          console.error("Error adding to wishlist:", e)
+      }
+  },[user,navigate])
+
 // carts
     useEffect(() => {
         if (!user || !user.uid) {
@@ -226,10 +247,45 @@ const addCart = useCallback ( async (item,imagePath) =>{
         return () => unsubscribe()
       }, [user])
 
+      // wishlist
+      useEffect(() => {
+          if (!user || !user.uid) {
+              setWishList([])
+              setLoading(true)
+              return
+          } 
+              
+          const wishListRef = collection(db, "wishlist")
+          const q = query(wishListRef, where("uid", "==", user.uid))
+              
+          const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const wishListItem = [];
+           querySnapshot.forEach((doc) => {
+              wishListItem.push({
+                id: doc.id,
+                ...doc.data()
+              })
+          })
+              
+            // Set the state with the unique items (this will reset and overwrite cart items)
+            setWishList(wishListItem)
+            setLoading(false)
+        })
+              
+          return () => unsubscribe()
+      }, [user])
+
+      // go to login
+      const goToLogin = () =>{
+        navigate("/signup")
+    }
+
+      
   return (
     <UserContext.Provider value={{
       signup,signout,user,handleChange,userData,signUpWithEmail,
-      signInWithEmail,isUserOpen,setIsUserOpen,errorMessage,addCart,cart,loading
+      signInWithEmail,isUserOpen,setIsUserOpen,errorMessage,addCart,
+      cart,loading, goToLogin,addWishList,wishlist
      }}
     >
       <Routes>
@@ -241,6 +297,7 @@ const addCart = useCallback ( async (item,imagePath) =>{
           <Route path='/contact' element={<ContactUs />} />
           <Route path='/about' element={<About/>} />
           <Route path='/carts' element={<Carts />} />
+          <Route path='/wishlist' element={<Wishlist />} />
         </Route>
       </Routes>
     </UserContext.Provider>

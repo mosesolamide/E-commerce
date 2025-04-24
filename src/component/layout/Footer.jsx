@@ -6,7 +6,7 @@ import { RiLinkedinLine } from "react-icons/ri"
 
 export default function Footer(){
     return(
-        <footer className='bg-black w-[100vw] text-white grid place-items-center py-4 px-3'>
+        <footer className='bg-black text-white grid place-items-center py-4 px-3 w-full'>
            <div className='grid grid-cols-2 md:grid-cols-5 gap-8'>
                 <ul>
                         <li className='font-medium text-xs mb-3'>Exclusive</li>

@@ -9,7 +9,7 @@ import { IoGameControllerOutline } from "react-icons/io5"
 
 export default function Categories(){
     return(
-        <section>
+        <section className='w-full'>
             <div className="flex items-center gap-2">
                 <div className="w-[13px] h-[27px] bg-[#DB4444] rounded-[2px]"></div>
                 <span className="text-[#DB4444] font-medium text-sm">Categories</span>

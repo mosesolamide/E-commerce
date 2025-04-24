@@ -7,7 +7,7 @@ export default function Layout(){
     return(
         <>
             <Header />
-            <main className="px-5 mb-6">
+            <main className="px-5 mb-6 flex flex-col items-center justify-center">
                 <Outlet />
             </main>
             <Footer />

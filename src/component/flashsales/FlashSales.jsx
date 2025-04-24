@@ -5,7 +5,7 @@ import Product from "./Product"
 
 
 export default function FlashSale(){
-    const { addCart } = useContext(UserContext)
+    const { addCart, user, goToLogin,addWishList } = useContext(UserContext)
     const [hoveredIndex,setHoveredIndex] = useState(null)
     const [allProductOpened,setAllProductOpened] = useState(false)
     // Set the end date/time for the flash sale (e.g., 3 days from now)
@@ -52,7 +52,7 @@ export default function FlashSale(){
       }, [])
 
     return(
-        <section className="my-4"> 
+        <section className="my-4 w-full"> 
             <div className="flex items-center gap-2">
                 <div className="w-[13px] h-[27px] bg-[#DB4444] rounded-[2px]"></div>
                 <span className="text-[#DB4444] font-medium text-sm">Today's</span>
@@ -83,15 +83,18 @@ export default function FlashSale(){
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-6 mt-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 mt-5">
                 {products.map( (item,index) => (
                     <Product 
-                        key={index || item.id}
+                        key={index}
                         item={item}
                         isHovered={hoveredIndex === index}
                         onMouseEnter={() => handleMouseEnter(index)}
                         onMouseLeave={handleMouseLeave}
                         onAddCart={addCart}
+                        user={user}
+                        goToLogin={goToLogin}
+                        addWishList={addWishList}
                     />
                 ))}
             </div>
