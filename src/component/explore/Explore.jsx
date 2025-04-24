@@ -59,8 +59,8 @@ export default function Explore() {
               {/* Add to cart button - bottom */}
               <button
                 className={`absolute bottom-0 left-0 right-0 bg-black text-white text-xs w-full
-                  py-2 rounded-b-sm transition-all duration-300
-                  md:${hoveredIndex === index ? 'translate-y-0' : 'translate-y-full'}`}
+                  py-2 rounded-b-sm transition-all duration-300 
+                  ${hoveredIndex === index ? 'translate-y-0' : 'translate-y-full'}`}
                 onClick={() => user ? addCart(items, "explore_product") : goToLogin()}
               >
                 Add To Cart

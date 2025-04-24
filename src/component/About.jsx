@@ -10,7 +10,7 @@ import { TbMoneybag } from "react-icons/tb"
 export default function About(){
     return(
         <>
-            <div className='flex flex-col md:flex-row justify-center items-center gap-10 mt-6'>
+            <div className='flex flex-col md:flex-row justify-center items-center gap-10 mt-6 '>
                 <div className='w-[350px] md:w-[400px]'>
                     <h1 className='font-medium text-2xl md:text-4xl '>Our Story</h1>
                     <p className='text-[9px] sm:text-xs md:text-sm font-normal my-4'>

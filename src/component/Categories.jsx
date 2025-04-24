@@ -9,10 +9,10 @@ import { IoGameControllerOutline } from "react-icons/io5"
 
 export default function Categories(){
     return(
-        <section className='w-full'>
+        <section className='my-6 w-full max-w-7xl mx-auto '>
             <div className="flex items-center gap-2">
-                <div className="w-[13px] h-[27px] bg-[#DB4444] rounded-[2px]"></div>
-                <span className="text-[#DB4444] font-medium text-sm">Categories</span>
+                <div className="w-[13px] h-[27px] bg-red-600 rounded-[2px]"></div>
+                <span className="text-red-600 font-medium text-sm">Categories</span>
             </div>
             <div className="mt-4 font-bold flex flex-col">
                 <h1 className="mr-14 text-xs md:text-xl">Browse By Categories</h1>

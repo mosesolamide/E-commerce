@@ -27,7 +27,7 @@ export default function Dashboard() {
         <div className='flex flex-col md:flex-row justify-center items-center gap-5 w-full'>
           <div className='flex'>
             <nav>
-              <ul className='grid grid-cols-3 md:grid-cols-1 text-[0.5em] md:text-[0.5em] lg:text-[0.7em] gap-3 mt-2'>
+              <ul className='grid grid-cols-3 md:grid-cols-1 text-[0.5em] md:text-[0.5em] lg:text-sm gap-3 mt-2'>
                 <li>Woman's Fashion</li>
                 <li>Men's Fashion</li>
                 <li>Electronics</li>
@@ -39,7 +39,7 @@ export default function Dashboard() {
                 <li>Health Beauty</li>
               </ul>
             </nav>
-            <div className='hidden md:block border-l border-solid border-gray-300 sm:h-[259px] md:h-[275px] ml-[20px]'></div>
+            <div className='hidden md:block border-l border-solid border-gray-300 sm:h-[259px] md:h-[279px] ml-[20px]'></div>
           </div>
           
           <div className='relative w-[80vw] h-[140px] sm:h-[200px] md:h-[260px] mt-3 '>

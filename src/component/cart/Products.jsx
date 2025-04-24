@@ -20,7 +20,7 @@ const Product = memo(({item,id}) => {
 
     return(
         <tr
-            className=' grid grid-cols-4 justify-between place-items-center text-[8px] md:text-[9px] 
+            className=' grid grid-cols-4 justify-between place-items-center text-xs md:text-sm 
             font-medium py-3 px-3 shadow-sm rounded-[2px] mt-6'
         >
             <td className='flex items-center gap-1'>

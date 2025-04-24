@@ -8,7 +8,7 @@ export default function ContactUs(){
             <div className="bg-white shadow-sm p-5">
                 <ul className="flex flex-col gap-3">
                     <li className="flex gap-2 ">
-                        <div className="bg-[#DB4444] w-[25px] h-[25px] rounded-[50%] flex justify-center items-center">
+                        <div className="bg-[#DB4444] w-[25px] h-[25px] rounded-full flex justify-center items-center">
                             <LuPhone size={15} className="text-white" />
                         </div>
                         <span className="font-medium">Call To Us</span>
@@ -19,7 +19,7 @@ export default function ContactUs(){
                 <hr className="my-5 text-black/50"/>
                 <ul className="flex flex-col gap-3">
                     <li className="flex gap-2 ">
-                        <div className="bg-[#DB4444] w-[25px] h-[25px] rounded-[50%] flex justify-center items-center">
+                        <div className="bg-[#DB4444] w-[25px] h-[25px] rounded-full flex justify-center items-center">
                             <TbMessage size={15} className="text-white" />
                         </div>
                         <span className="font-medium">Write To Us</span>
@@ -40,7 +40,7 @@ export default function ContactUs(){
                     <textarea name="" id="" className="bg-[#F5F5F5] sm:col-span-3 sm:row-span-3 indent-4 py-2 text-sm resize-none" placeholder="Your message"></textarea>
                 </form>
                 <button 
-                    className="text-white bg-[#DB4444] rounded-[2px] mt-4 px-4 py-2"
+                    className="text-white bg-[#DB4444] rounded-xs mt-4 px-4 py-2"
                 >
                     Send Message
                 </button>

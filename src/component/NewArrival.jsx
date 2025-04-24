@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 export default function NewArrival(){
     return(
-        <section className="my-6 w-full"> 
+        <section className="my-6 w-full max-w-7xl mx-auto "> 
             <div className="flex items-center gap-2">
-                <div className="w-[13px] h-[27px] bg-[#DB4444] rounded-[2px]"></div>
-                <span className="text-[#DB4444] font-medium text-sm">Featured</span>
+                <div className="w-3 h-6 bg-red-600 rounded-sm"></div>
+                <span className="text-red-600 font-medium text-sm">Featured</span>
             </div>
             <h1 className="my-4 font-bold text-xs md:text-xl">New Arrival</h1>
             <div className='grid grid-rows-[repeat(3,200px)] sm:grid-rows-[repeat(2,160px)] grid-cols-2 sm:grid-cols-4 gap-2 text-white max-w-[1050px] mx-auto'>

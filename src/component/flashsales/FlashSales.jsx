@@ -52,10 +52,10 @@ export default function FlashSale(){
       }, [])
 
     return(
-        <section className="my-4 w-full"> 
+        <section className="my-6 w-full max-w-7xl mx-auto "> 
             <div className="flex items-center gap-2">
-                <div className="w-[13px] h-[27px] bg-[#DB4444] rounded-[2px]"></div>
-                <span className="text-[#DB4444] font-medium text-sm">Today's</span>
+                <div className="w-3 h-6 bg-red-600 rounded-sm"></div>
+                <span className="text-red-600 font-medium text-sm">Today's</span>
             </div>
             <div className="mt-4 font-bold flex items-center">
                 <h1 className="mr-14 text-xs md:text-xl">Flash Sales</h1>
@@ -100,11 +100,11 @@ export default function FlashSale(){
             </div>
             {/* View all flash sales products */}
             <button 
-                className="bg-[#DB4444] text-white text-[9px] md:text-xs py-1 md:py-2 rounded-[2px] 
+                className="bg-red-600 hover:bg-red-700 text-white text-[9px] md:text-xs py-1 md:py-2 rounded-sm 
                 flex justify-center w-[140px] mx-auto my-4 cursor-pointer"
                 onClick={() => setAllProductOpened(prev => !prev)}
             >
-                {!allProductOpened? "View All Product" : "Close All Product"}
+                {!allProductOpened? "View All Product" : "Show Less"}
             </button>
         </section>
     )

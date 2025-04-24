@@ -20,7 +20,7 @@ export default function Header(){
 
     return(
         <header className="flex justify-around text-xs items-center py-3 border-b-[1px] border-gray-300 relative">
-            <h1 className="font-medium">Exclusive</h1>
+            <h1 className="font-medium text-xs md:text-sm">Exclusive</h1>
             <nav className="flex gap-10 md:gap-20">
                 <span 
                     className="md:hidden flex justify-center items-center"
@@ -31,7 +31,7 @@ export default function Header(){
                 </span>
                 <ul 
                     className="hidden absolute top-8 md:top-0  px-2 py-1 rounded-[2px] 
-                    bg-gray-100 md:bg-white md:sticky md:flex md:gap-6 md:items-center text-[9px] md:text-xs" 
+                    bg-gray-100 md:bg-white md:sticky md:flex md:gap-6 md:items-center text-xs md:text-sm font-medium" 
                     id="menuDropBar"
                 >
                     <li className="mb-1 md:m-0">
