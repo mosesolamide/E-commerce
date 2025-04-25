@@ -4,7 +4,7 @@ import Layout from './component/layout/Layout'
 import SignUp from './auth/SignUp'
 import Login from './auth/Login'
 import Dashboard from './component/Dashboard'
-import PreviewProduct from './component/PreviewProduct'
+import PreviewProduct from './component/Payment'
 import About from './component/About'
 import ContactUs from './component/ContactUs'
 import Wishlist from './WishList.jsx/WishList'
@@ -21,6 +21,7 @@ import {
   } from 'firebase/auth'
 import { addDoc, collection, onSnapshot, query, where } from "firebase/firestore"
 import { db } from './auth/firebase'
+import Payment from './component/Payment'
 
 export const UserContext = createContext()
 
@@ -31,7 +32,8 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [user,setUser] = useState(null) 
   const [errorMessage,setErrorMessage] = useState(null)
-  const [wishlist, setWishList] = useState([])   
+  const [wishlist, setWishList] = useState([])  
+  const [ totalPrice,setTotalPrice ] = useState(null) 
   const [userData,setUserData] = useState({
     name:"",
     password:"",
@@ -280,12 +282,22 @@ const addCart = useCallback ( async (item,imagePath) =>{
         navigate("/signup")
     }
 
+    // totalPrice
+
+    useEffect(() => {
+        const total = cart.reduce( (acc,item) => {
+            const price = item.product?.discountPrice || item.product?.normalPrice || 0
+            const qty = item.quantity || 1
+            return acc + price * qty 
+        },0)
+        setTotalPrice(total)
+      }, [cart])
       
   return (
     <UserContext.Provider value={{
       signup,signout,user,handleChange,userData,signUpWithEmail,
       signInWithEmail,isUserOpen,setIsUserOpen,errorMessage,addCart,
-      cart,loading, goToLogin,addWishList,wishlist
+      cart,loading, goToLogin,addWishList,wishlist,totalPrice
      }}
     >
       <Routes>
@@ -293,7 +305,7 @@ const addCart = useCallback ( async (item,imagePath) =>{
           <Route index element={<Dashboard />} />
           <Route path='signup' element={<SignUp />} />
           <Route path='login' element={<Login />} />
-          <Route path='previewProduct/:id' element={<PreviewProduct />} />
+          <Route path='payment' element={<Payment />} />
           <Route path='/contact' element={<ContactUs />} />
           <Route path='/about' element={<About/>} />
           <Route path='/carts' element={<Carts />} />

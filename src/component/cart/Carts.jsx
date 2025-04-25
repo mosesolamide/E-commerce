@@ -1,21 +1,12 @@
-import React,{ useContext, useState, useEffect } from 'react'
+import React,{ useContext } from 'react'
 import { UserContext } from '../../App'
 import { GiShoppingCart } from "react-icons/gi"
 import Product from './Products'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Carts(){
-    const { user, cart, loading } = useContext(UserContext)
-    const [ totalPrice,setTotalPrice ] = useState(null)
-
-    useEffect(() => {
-        const total = cart.reduce( (acc,item) => {
-            const price = item.product?.discountPrice || item.product?.normalPrice || 0
-            const qty = item.quantity || 1
-            return acc + price * qty 
-        },0)
-        setTotalPrice(total)
-      }, [cart])
+    const { user, cart, loading, totalPrice } = useContext(UserContext)
+    const navigate = useNavigate()
     
     return(
         <>
@@ -62,7 +53,7 @@ export default function Carts(){
                     <div className='mt-6 flex flex-col justify-center items-center md:flex-row md:justify-around gap-2 w-full'>
                         <div className='flex gap-3'>
                             <input type="text" placeholder='Coupon Code' className='border border-black/50 rounded-[2px] indent-2 w-[180px] h-[40px]' />
-                            <button className='bg-red-600 px-4 py-2 text-white rounded-[4px] text-xs h-[40px]'>Apply Coupon</button>
+                            <button className='bg-red-600 hover:bg-red-700 cursor-pointer px-4 py-2 text-white rounded-[4px] text-xs h-[40px]'>Apply Coupon</button>
                         </div>
                         <div className='mt-5 md:mt-0 w-[300px] sm:w-[350px]'>
                             <div className='border p-3 rounded-[2px] text-center'>
@@ -82,7 +73,8 @@ export default function Carts(){
                                     <span>${totalPrice}</span>
                                 </div>
                                 <button 
-                                    className='bg-red-600 px-4 py-2 text-white rounded-[4px] text-xs h-[40px] mt-5'
+                                    className='bg-red-600 hover:bg-red-700 cursor-pointer px-4 py-2 text-white rounded-[4px] text-xs h-[40px] mt-5'
+                                    onClick={ () => navigate("/payment")}
                                 >
                                     Process to checkout
                                 </button>

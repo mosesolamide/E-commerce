@@ -21,7 +21,7 @@ export default function Header(){
     return(
         <header className="flex justify-around text-xs items-center py-3 border-b-[1px] border-gray-300 relative">
             <h1 className="font-medium text-xs md:text-sm">Exclusive</h1>
-            <nav className="flex gap-10 md:gap-20">
+            <nav className="flex gap-10 md:gap-30">
                 <span 
                     className="md:hidden flex justify-center items-center"
                     onClick={menuBar}
@@ -69,8 +69,7 @@ export default function Header(){
                         </NavLink>
                     </li>
                 </ul>
-                <ul className="flex gap-1 items-center">
-                    <li><input type="search" className="bg-gray-100 text-[6px] md:text-[9px] py-[3px] w-[100px] md:w-[150px] rounded-[1px] indent-1.5" placeholder="What are you looking for?" /></li>
+                <ul className="flex gap-2 items-center">
                     <li className="cursor-pointer">
                         {user && (
                             <div className="relative">
