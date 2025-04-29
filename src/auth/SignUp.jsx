@@ -16,7 +16,7 @@ export default function SignUp() {
             </div>
             <input
                 type="text" 
-                placeholder='Name' 
+                placeholder='Fullname' 
                 name='name'
                 className='border-b-1 w-[200px] mb-4 border-gray-400 text-[11px] py-3 outline-0' 
                 value={userData.name} 

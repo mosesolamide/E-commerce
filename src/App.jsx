@@ -4,7 +4,8 @@ import Layout from './component/layout/Layout'
 import SignUp from './auth/SignUp'
 import Login from './auth/Login'
 import Dashboard from './component/Dashboard'
-import PreviewProduct from './component/Payment'
+import MyAccount from './component/ManageAccount/Myprofile'
+import AccountLayout from './component/ManageAccount/AccounLayout'
 import About from './component/About'
 import ContactUs from './component/ContactUs'
 import Wishlist from './WishList.jsx/WishList'
@@ -22,6 +23,7 @@ import {
 import { addDoc, collection, onSnapshot, query, where } from "firebase/firestore"
 import { db } from './auth/firebase'
 import Payment from './component/Payment'
+import MyProfile from './component/ManageAccount/Myprofile'
 
 export const UserContext = createContext()
 
@@ -43,9 +45,24 @@ function App() {
   //listening for any changes if the user login or logout and direct them
   const location = useLocation()
 
+  const userMoreDeatils = async (detail) =>{
+        try {
+          await addDoc(collection(db, "userMoreDetails"), {
+          name: detail.displayName, 
+          uid: detail.uid,
+          address:"",
+          email:detail.email,
+          createdAt: new Date()
+          })
+        } catch (e) {
+          console.error("Error adding to moreDetails:", e)
+        }
+
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
+      setUser(auth.currentUser)
       const currentPath = location.pathname;
       if (currentUser && (currentPath === "/login" || currentPath === "/signup")) {
         navigate("/")
@@ -71,6 +88,7 @@ function App() {
         try{
           const result = await signInWithPopup(auth, googleProvider)
           setUser (result.user)
+          userMoreDeatils(auth.currentUser)
         }catch(err){
           console.error(err)
         }
@@ -99,8 +117,9 @@ function App() {
           displayName: userData.name
         })
         //Update state and show success
-        setUser(auth.currentUser);
-        setErrorMessage(null); // Clear any errors on success
+        setUser(auth.currentUser)
+        userMoreDeatils(auth.currentUser)
+        setErrorMessage(null) // Clear any errors on success
     
       } catch (error) {
         let errorMessage = 'Signup failed'
@@ -297,7 +316,7 @@ const addCart = useCallback ( async (item,imagePath) =>{
     <UserContext.Provider value={{
       signup,signout,user,handleChange,userData,signUpWithEmail,
       signInWithEmail,isUserOpen,setIsUserOpen,errorMessage,addCart,
-      cart,loading, goToLogin,addWishList,wishlist,totalPrice
+      cart,loading, goToLogin,addWishList,wishlist,totalPrice,auth
      }}
     >
       <Routes>
@@ -310,6 +329,9 @@ const addCart = useCallback ( async (item,imagePath) =>{
           <Route path='/about' element={<About/>} />
           <Route path='/carts' element={<Carts />} />
           <Route path='/wishlist' element={<Wishlist />} />
+          <Route path='/manageaccount' element={<AccountLayout />}>
+            <Route index element={<MyProfile />} />
+          </Route>
         </Route>
       </Routes>
     </UserContext.Provider>

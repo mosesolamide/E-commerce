@@ -117,6 +117,7 @@ export default function Header(){
                             <li className="mb-3">
                                 <Link
                                     className="flex gap-1 items-center"
+                                    to="/manageaccount"
                                 >
                                     <FiUser size={13} /> Manage Account
                                 </Link>
