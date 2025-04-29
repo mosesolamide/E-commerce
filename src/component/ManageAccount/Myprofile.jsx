@@ -98,7 +98,7 @@ export default function MyProfile() {
         )
     }
     return (
-        <div className='py-9 px-12 shadow-sm'>
+        <div className='py-9 px-12 shadow-sm md:ml-[20%] '>
             <h1 className='text-red-600 text-xs md:text-sm font-medium'>Edit Your Profile</h1>
             <form className='mt-4'>        
                 <div className={`grid grid-cols-2 ${isUserGoogle ? 'grid-rows-2' : 'grid-rows-4'} gap-7 text-sm`}>
