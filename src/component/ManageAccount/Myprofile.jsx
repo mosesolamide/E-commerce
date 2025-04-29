@@ -98,7 +98,7 @@ export default function MyProfile() {
         )
     }
     return (
-        <div className='py-9 px-12 shadow-sm md:ml-[20%] '>
+        <div className='py-9 px-5 md:px-12 shadow-sm md:ml-[20%] '>
             <h1 className='text-red-600 text-xs md:text-sm font-medium'>Edit Your Profile</h1>
             <form className='mt-4'>        
                 <div className={`grid grid-cols-2 ${isUserGoogle ? 'grid-rows-2' : 'grid-rows-4'} gap-7 text-sm`}>
@@ -107,7 +107,7 @@ export default function MyProfile() {
                         <input 
                             type="text" 
                             id="firstName"
-                            className='outline-0 indent h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100'
+                            className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100'
                             value={form.firstName}
                             name='firstName'
                             onChange={handleChange}
@@ -118,7 +118,7 @@ export default function MyProfile() {
                         <input 
                             type="text" 
                             id="lastName"
-                            className='outline-0 indent h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
+                            className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
                             value={form.lastName}
                             onChange={handleChange}
                             name='lastName'
@@ -128,7 +128,7 @@ export default function MyProfile() {
                         <label htmlFor="email" className='text-xs md:text-sm'>Email</label>
                         <input 
                             type="email" 
-                            className='outline-0 indent h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
+                            className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
                             placeholder={userDetails[0]?.email || 'example@email.com'}
                             onChange={handleChange}
                             value={form.email}
@@ -139,7 +139,7 @@ export default function MyProfile() {
                         <label htmlFor="address" className='text-xs md:text-sm'>Address</label>
                         <input 
                             type="text"
-                            className='outline-0 indent h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
+                            className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
                             onChange={handleChange}
                             name='address'
                             value={form.address}
@@ -150,17 +150,17 @@ export default function MyProfile() {
                         <div className='flex flex-col gap-2'>
                             <input 
                                 type="password" 
-                                className='outline-0 indent h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
+                                className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
                                 placeholder='Current Password' 
                             />
                             <input 
                                 type="password" 
-                                className='outline-0 indent h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
+                                className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
                                 placeholder='New Password'
                             />
                             <input 
                                 type="password" 
-                                className='outline-0 indent h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
+                                className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
                                 placeholder='Confirm New Password'
                             />
                         </div>
