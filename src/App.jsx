@@ -41,9 +41,11 @@ function App() {
     password:"",
     email:""
   })
+  
   const [isUserOpen,setIsUserOpen] = useState(true)
   //listening for any changes if the user login or logout and direct them
   const location = useLocation()
+  console.log(userData)
 
   const userMoreDeatils = async (detail) =>{
         try {
@@ -97,7 +99,7 @@ function App() {
     //signup with email and password
     const signUpWithEmail = async () => {
       try {
-        setErrorMessage(null); // Clear previous errors
+        setErrorMessage(null)
         // Validate inputs
         if (!userData.email || !userData.password || !userData.name) {
           throw new Error('All fields are required');
@@ -120,7 +122,7 @@ function App() {
         setUser(auth.currentUser)
         userMoreDeatils(auth.currentUser)
         setErrorMessage(null) // Clear any errors on success
-    
+        
       } catch (error) {
         let errorMessage = 'Signup failed'
         

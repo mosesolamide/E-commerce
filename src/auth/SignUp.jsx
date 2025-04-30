@@ -13,6 +13,7 @@ export default function SignUp() {
             <div className='mb-5'>
                 <h1 className='font-medium'>Create an account</h1>
                 <p className='text-[9px]'>Enter your details below</p>
+                <p className="my-2 text-red-600">{errorMessage}</p>
             </div>
             <input
                 type="text" 
@@ -44,7 +45,7 @@ export default function SignUp() {
                 required
             />
             <button 
-                className='bg-[#DB4444] text-white w-[200px] py-2 mb-4 rounded-[2px]'
+                className='bg-[#DB4444] text-white w-[200px] py-2 mb-4 rounded-2 cursor-pointer'
                 type='button'
                 onClick={signUpWithEmail}
             >

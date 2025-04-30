@@ -83,9 +83,9 @@ export default function About(){
                     <h2 className='font-medium text-sm md:text-lg mb-[-8px] mt-[13px]'>Tom Cruise</h2>
                     <span className='text-[9px]'>Founder & Chairman</span>
                     <div className='flex gap-1 mt-[5px]'>
-                        <PiTwitterLogo />
-                        <LuInstagram />
-                        <RiLinkedinLine />
+                        <PiTwitterLogo size={20} className='hover:text-sky-500 transition-colors duration-300 cursor-pointer'/>
+                        <LuInstagram size={20} className='hover:text-red-500 transition-colors duration-300 cursor-pointer'/>
+                        <RiLinkedinLine size={20}  className='hover:text-blue-800 transition-colors duration-300 cursor-pointer'/>
                     </div>
                 </article>
                 <article className="rounded-[2px]">
@@ -95,9 +95,9 @@ export default function About(){
                     <h2 className='font-medium text-sm md:text-lg mb-[-8px] mt-[13px]'>Emma Watson</h2>
                     <span className='text-[9px]'>Managing Director</span>
                     <div className='flex gap-1 mt-[5px]'>
-                        <PiTwitterLogo />
-                        <LuInstagram />
-                        <RiLinkedinLine />
+                        <PiTwitterLogo size={20} className='hover:text-sky-500 transition-colors duration-300 cursor-pointer'/>
+                        <LuInstagram size={20} className='hover:text-red-500 transition-colors duration-300 cursor-pointer' />
+                        <RiLinkedinLine size={20}  className='hover:text-blue-800 transition-colors duration-300 cursor-pointer'/>
                     </div>
                 </article>
                 <article className="rounded-[2px]">
@@ -107,9 +107,9 @@ export default function About(){
                     <h2 className='font-medium text-sm md:text-lg mb-[-8px] mt-[13px]'>Will Smith</h2>
                     <span className='text-[9px]'>Product Designer</span>
                     <div className='flex gap-1 mt-[5px]'>
-                        <PiTwitterLogo />
-                        <LuInstagram />
-                        <RiLinkedinLine />
+                        <PiTwitterLogo size={20} className='hover:text-sky-500 transition-colors duration-300 cursor-pointer'/>
+                        <LuInstagram size={20} className='hover:text-red-500 transition-colors duration-300 cursor-pointer' />
+                        <RiLinkedinLine size={20}  className='hover:text-blue-800 transition-colors duration-300 cursor-pointer'/>
                     </div>
                 </article>
             </div>
