@@ -1,11 +1,11 @@
-import React,{ useContext } from 'react'
+import React,{ useContext, lazy, Suspense } from 'react'
 import { UserContext } from '../../App'
-import { GiShoppingCart } from "react-icons/gi"
-import Product from './Products'
 import { Link, useNavigate } from 'react-router-dom'
 
 export default function Carts(){
     const { user, cart, loading, totalPrice } = useContext(UserContext)
+    const Product = lazy(() => import('./Products'))
+    const GiShoppingCart = lazy(() => import("react-icons/gi").then(module => ({ default: module.GiShoppingCart})))
     const navigate = useNavigate()
     
     return(
@@ -17,7 +17,9 @@ export default function Carts(){
                     </div>
             ): cart.length === 0 && user ? (
                 <div className='flex flex-col justify-center items-center h-[50vh]'>
-                    <GiShoppingCart size={100} className='text-gray-400' />
+                    <Suspense fallback={<div>Loading</div>}>
+                        <GiShoppingCart size={100} className='text-gray-400' />
+                    </Suspense>
                     <div className='flex gap-2 items-center my-3'>
                         <p className='text-2xl font-medium'>Your Cart Is Empty</p>
                         <Link to="/" className='text-xs text-[#DB4444] underline'>Go Shopping</Link>
@@ -40,11 +42,13 @@ export default function Carts(){
                         <tbody>
                             {
                                 cart.map( (item,index) =>(
-                                    <Product 
-                                        key={index}
-                                        item={item}
-                                        id={item.id}
-                                    />
+                                    <Suspense fallback={<div>Loading....</div>}>
+                                        <Product 
+                                            key={index}
+                                            item={item}
+                                            id={item.id}
+                                        />
+                                    </Suspense>
                                 ))
                             }
                         </tbody>

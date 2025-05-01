@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
 import { UserContext } from '../App'
 
 export default function Payment(){

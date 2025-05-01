@@ -1,7 +1,5 @@
-import React from "react"
-import { IoCartOutline } from "react-icons/io5"
+import React , { lazy, Suspense }from "react"
 import { FaUserCircle } from "react-icons/fa"
-import {  IoIosMenu, IoIosLogOut } from "react-icons/io"
 import { NavLink,Link } from "react-router-dom"
 import { useContext } from 'react'
 import { UserContext } from '../../App'
@@ -13,6 +11,10 @@ import { PiHandbagThin } from "react-icons/pi"
 
 export default function Header(){
     const { user,signout,isUserOpen,setIsUserOpen,cart,wishlist } = useContext(UserContext)
+    const IoIosMenu = lazy(() => import("react-icons/io").then(module => ({ default: module.IoIosMenu })))
+    const IoIosLogOut = lazy(() => import("react-icons/io").then(module => ({ default: module.IoIosLogOut })))
+    const IoCartOutline = lazy(() => import("react-icons/io5").then(module => ({ default: module.IoCartOutline })))
+
 
     const menuBar = () =>{
         document.getElementById("menuDropBar").classList.toggle("hidden")
@@ -27,7 +29,9 @@ export default function Header(){
                     onClick={menuBar}
                     id="icon"
                 >
-                    < IoIosMenu size={15}/>
+                    <Suspense fallback={<div>....</div>}>
+                     < IoIosMenu size={15}/>
+                    </Suspense>
                 </span>
                 <ul 
                     className="hidden absolute top-8 md:top-0  px-2 py-1 rounded-2 
@@ -89,7 +93,9 @@ export default function Header(){
                         {user && (
                             <div className="relative">
                                 <Link to='/carts'>
-                                    <IoCartOutline className="text-[15px] sm:text-[20px] md:text-[25px]" />
+                                    <Suspense fallback={<div>....</div>}>
+                                        <IoCartOutline className="text-[15px] sm:text-[20px] md:text-[25px]" />
+                                    </Suspense>
                                     <span
                                         className="bg-[#DB4444] text-white text-[8px] md:text-[10px] rounded-[50%]
                                         w-[10px] md:w-[13px] h-[10px] md:h-[13px] absolute top-[-4px] md:top-0 right-[-2px] md:right-0 flex justify-center items-center"
@@ -148,7 +154,10 @@ export default function Header(){
                                     className="flex gap-1 items-center"
                                     onClick={signout}
                                 >
-                                    <IoIosLogOut size={13} />Logout
+                                    <Suspense fallback={<div>....</div>}>
+                                         <IoIosLogOut size={13} />
+                                    </Suspense>
+                                    Logout
                                 </Link>
                             </li>
                         </ul>

@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { data } from './BestProduct';
-import { CiHeart } from "react-icons/ci";
-import { FiEye } from "react-icons/fi";
-import { UserContext } from '../../App';
+import React, { useState, useContext } from 'react'
+import { data } from './BestProduct'
+import { CiHeart } from "react-icons/ci"
+import { FiEye } from "react-icons/fi"
+import { UserContext } from '../../App'
 
 export default function BestProducts() {
-    const { addCart, user, goToLogin, addWishList } = useContext(UserContext);
-    const [hoveredIndex, setHoveredIndex] = useState(null);
-    const [allProductOpened, setAllProductOpened] = useState(false);
+    const { addCart, user, goToLogin, addWishList } = useContext(UserContext)
+    const [hoveredIndex, setHoveredIndex] = useState(null)
+    const [allProductOpened, setAllProductOpened] = useState(false)
 
     // Logic for viewing more products
     const numberOfPage = allProductOpened ? data.length : 5;
@@ -24,7 +24,7 @@ export default function BestProducts() {
                 <h1 className="text-xs md:text-2xl font-bold">Best Selling Products</h1>
                 <button 
                     className="bg-red-600 text-white text-xs md:text-sm py-2 px-6 rounded-sm
-            hover:bg-red-700 transition-colors"
+                     hover:bg-red-700 transition-colors"
                     onClick={() => setAllProductOpened(prev => !prev)}
                 >
                     {!allProductOpened ? "View All Products" : "Show Less"}
@@ -50,6 +50,7 @@ export default function BestProducts() {
                                     <img 
                                         src={`images/bestSell/${items.img}`} 
                                         alt={items.name} 
+                                        loading='lazy'
                                         className="w-full h-full object-contain" 
                                     />  
                                 </div>

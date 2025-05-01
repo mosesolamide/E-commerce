@@ -1,9 +1,9 @@
-import React, { memo, useCallback } from 'react'
+import React, { memo, useCallback, lazy, Suspense } from 'react'
 import { doc, updateDoc ,deleteDoc } from "firebase/firestore"
 import { db } from '../../auth/firebase'
-import { MdOutlineDelete } from "react-icons/md"
 
 const Product = memo(({item,id}) => {
+    const MdOutlineDelete = lazy(() => import("react-icons/md").then(module => ({ default: module.MdOutlineDelete })))
 
     const updateQuantity = useCallback( async (newQuantity,docId) => {
         if (newQuantity < 1) return
@@ -47,7 +47,11 @@ const Product = memo(({item,id}) => {
                 className='flex items-center gap-2 ml-8'
             >
                 ${(item.product.discountPrice || item.product.normalPrice) * item.quantity} 
-                <span onClick={ () => deleteItem(id) }><MdOutlineDelete size={15} className='text-red-600 cursor-pointer' /></span>
+                <span onClick={ () => deleteItem(id) }>
+                    <Suspense fallback={<div>...</div>}>
+                        <MdOutlineDelete size={15} className='text-red-600 cursor-pointer' />
+                    </Suspense>
+                </span>
             </td>
         </tr>
     )

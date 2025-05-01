@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import FlashSale from './flashsales/FlashSales'
-import Categories from './Categories'
-import BestProducts from './best_product/BestProducts'
-import Explore from './explore/Explore'
-import NewArrival from './NewArrival'
-import Last from './Last'
+import React, { useState, useEffect, Suspense, lazy } from 'react'
 
 export default function Dashboard() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const BestProducts = lazy(() => import('./best_product/BestProducts'))
+  const Categories = lazy(() => import('./Categories'))
+  const FlashSale = lazy(() => import('./flashsales/FlashSales'))
+  const Explore = lazy(() => import('./explore/Explore'))
+  const NewArrival = lazy(() => import('./NewArrival'))
+  const Last = lazy(() => import('./Last'))
   
   const slides = [
     { img: "images/ads.png", alt: "Advertisement" },
@@ -59,11 +59,17 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
-        <FlashSale />
+        <Suspense fallback={<div>Loading....</div>}>
+          <FlashSale />
+        </Suspense>
         <hr className='my-7 md:my-14 text-black/50'/>
-        <Categories />
+        <Suspense fallback={<div>Loading....</div>}>
+          <Categories />
+        </Suspense>
         <hr className='my-7 md:my-14 text-black/50'/>
-        <BestProducts />
+        <Suspense fallback={<div>Loading....</div>}>
+           <BestProducts />
+        </Suspense>
         <div className='my-10 bg-black px-5 md:pl-20 pt-6 pb-10 w-full'>
             <div className='grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] 
                  place-items-center gap-20 sm:gap-30 md:gap-0'
@@ -109,9 +115,17 @@ export default function Dashboard() {
               </div>
             </div>
         </div>
-        <Explore />
-        <NewArrival />
-        <Last />
+        <Suspense fallback={<div>Loading....</div>}>
+          <Explore />
+        </Suspense>
+
+        <Suspense fallback={<div>Loading....</div>}>
+          <NewArrival />
+        </Suspense>
+
+        <Suspense fallback={<div>Loading....</div>}>
+          <Last />
+        </Suspense>
     </>
   )
 }
