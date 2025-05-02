@@ -41,7 +41,6 @@ function App() {
     password: "",
     email: ""
   })
-  const [isUserOpen, setIsUserOpen] = useState(true)
   const location = useLocation()
 
   const userMoreDeatils = async (detail) => {
@@ -292,8 +291,6 @@ function App() {
     userData,
     signUpWithEmail,
     signInWithEmail,
-    isUserOpen,
-    setIsUserOpen,
     errorMessage,
     addCart,
     cart,

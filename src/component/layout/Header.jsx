@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, memo, useContext } from "react"
+import React, { lazy, Suspense, memo, useContext, useState } from "react"
 import { NavLink, Link } from "react-router-dom"
 import { UserContext } from '../../App'
 
@@ -14,7 +14,8 @@ const CiHeart = lazy(() => import("react-icons/ci").then(mod => ({ default: mod.
 const PiHandbagThin = lazy(() => import("react-icons/pi").then(mod => ({ default: mod.PiHandbagThin })))
 
 export default memo(function Header() {
-    const { user, signout, isUserOpen, setIsUserOpen, cart, wishlist } = useContext(UserContext)
+    const { user, signout, cart, wishlist } = useContext(UserContext)
+    const [isUserOpen, setIsUserOpen] = useState(true)
 
     const menuBar = () => {
         document.getElementById("menuDropBar").classList.toggle("hidden")
@@ -40,7 +41,7 @@ export default memo(function Header() {
                         <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/about">About</NavLink>
                     </li>
                     <li>
-                        <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/signup">Signup</NavLink>
+                        <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/signup">{user? "Logout": "Signup" }</NavLink>
                     </li>
                 </ul>
                 <ul className="flex gap-2 items-center">
@@ -51,9 +52,12 @@ export default memo(function Header() {
                                     <Suspense fallback={<div>...</div>}>
                                         <CiHeart className="text-[15px] sm:text-[20px] md:text-[25px]" />
                                     </Suspense>
-                                    <span className="bg-[#DB4444] text-white text-[8px] md:text-[10px] rounded-[50%] w-[10px] md:w-[13px] h-[10px] md:h-[13px] absolute top-[-4px] md:top-0 right-[-2px] md:right-0 flex justify-center items-center">
-                                        {wishlist.length}
-                                    </span>
+                                    {
+                                        wishlist.length > 0 
+                                        &&<span className="bg-red-600 text-white text-[8px] md:text-[10px] rounded-[50%] w-[10px] md:w-[13px] h-[10px] md:h-[13px] absolute top-[-4px] md:top-0 right-[-2px] md:right-0 flex justify-center items-center">
+                                            {wishlist.length}
+                                        </span>
+                                    }
                                 </Link>
                             </div>
                         )}
@@ -65,9 +69,12 @@ export default memo(function Header() {
                                     <Suspense fallback={<div>...</div>}>
                                         <IoCartOutline className="text-[15px] sm:text-[20px] md:text-[25px]" />
                                     </Suspense>
-                                    <span className="bg-[#DB4444] text-white text-[8px] md:text-[10px] rounded-[50%] w-[10px] md:w-[13px] h-[10px] md:h-[13px] absolute top-[-4px] md:top-0 right-[-2px] md:right-0 flex justify-center items-center">
-                                        {cart.length}
-                                    </span>
+                                    {
+                                        cart.length > 0 && 
+                                        <span className="bg-red-600 text-white text-[8px] md:text-[10px] rounded-[50%] w-[10px] md:w-[13px] h-[10px] md:h-[13px] absolute top-[-4px] md:top-0 right-[-2px] md:right-0 flex justify-center items-center">
+                                            {cart.length}
+                                        </span>
+                                    }
                                 </Link>
                             </div>
                         )}
@@ -85,7 +92,7 @@ export default memo(function Header() {
                     </li>
                 </ul>
                 <div className="relative">
-                    <ul className={`absolute right-[3px] top-[39px] flex-col text-xs w-[130px] p-2 bg-black/30 backdrop-blur-md text-white rounded-2 z-50 ${isUserOpen ? "hidden" : ""}`}>
+                    <ul className={`absolute right-[3px] top-[39px] flex-col text-xs w-[130px] p-2 bg-black/30 backdrop-blur-md text-white rounded-2 z-50 ${isUserOpen || !user ? "hidden" : ""}`}>
                         <li className="mb-3">
                             <Link className="flex gap-1 items-center" to="/manageaccount">
                                 <Suspense fallback={<div>...</div>}>

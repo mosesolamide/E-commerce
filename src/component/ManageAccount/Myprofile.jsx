@@ -239,7 +239,8 @@ export default function MyProfile() {
                     <div className='flex flex-col gap-1'>
                         <label htmlFor="email" className='text-xs md:text-sm'>Email</label>
                         <input 
-                            type="email" 
+                            type="email"
+                            id='email' 
                             className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
                             placeholder={userDetails[0]?.email || 'example@email.com'}
                             onChange={handleChange}
@@ -251,6 +252,7 @@ export default function MyProfile() {
                         <label htmlFor="address" className='text-xs md:text-sm'>Address</label>
                         <input 
                             type="text"
+                            id='address'
                             className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
                             onChange={handleChange}
                             name='address'
@@ -258,10 +260,11 @@ export default function MyProfile() {
                         />
                     </div>
                     <div className={`${isUserGoogle ? 'hidden' : 'col-span-2 row-span-2 flex flex-col gap-1'}`}>
-                        <label htmlFor="" className='text-xs md:text-sm'>Password Changes</label>
+                        <label htmlFor="password" className='text-xs md:text-sm'>Password Changes</label>
                         <div className='flex flex-col gap-2'>
                             <input 
                                 type="password" 
+                                id='password'
                                 className='outline-0 indent-3 h-9 md:h-12 md:px-5 py-4 rounded-sm bg-gray-100' 
                                 placeholder='Current Password' 
                                 name='current'
