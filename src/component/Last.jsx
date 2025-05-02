@@ -1,10 +1,11 @@
 import React, { Suspense, lazy } from "react"
 
-export default function Last(){
-    const SiAdguard = lazy(() => import("react-icons/si").then(module => ({ default: module.SiAdguard })))
-    const TbTruckDelivery = lazy(() => import("react-icons/tb").then(module => ({ default: module.TbTruckDelivery })))
-    const MdSupportAgent = lazy(() => import("react-icons/md").then(module => ({ default: module.MdSupportAgent })))
+// lazy loading
+const SiAdguard = lazy(() => import("react-icons/si").then(module => ({ default: module.SiAdguard })))
+const TbTruckDelivery = lazy(() => import("react-icons/tb").then(module => ({ default: module.TbTruckDelivery })))
+const MdSupportAgent = lazy(() => import("react-icons/md").then(module => ({ default: module.MdSupportAgent })))
 
+export default function Last(){
     return(
         <div className='my-15 flex flex-col sm:flex-row justify-center gap-7 sm:gap-20'>
             <div className='flex flex-col items-center gap-2'>

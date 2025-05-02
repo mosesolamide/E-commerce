@@ -1,13 +1,14 @@
-import React, { Suspense, Lazy } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { PiTwitterLogo } from "react-icons/pi"
 import { LuInstagram } from "react-icons/lu"
 import { RiLinkedinLine } from "react-icons/ri"
 import { FaStore, FaDollarSign, FaGift } from 'react-icons/fa';
 import { TbMoneybag } from "react-icons/tb"
 
+//lazy loading
+const Last = lazy(() => import('./Last'))
 
 export default function About(){
-    const Last = Lazy(() => import('./Last'))
     return(
         <>
             <div className='flex flex-col md:flex-row justify-center items-center gap-10 mt-6 '>

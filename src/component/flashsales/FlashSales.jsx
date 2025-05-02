@@ -1,28 +1,26 @@
-import React, { useEffect, useState, useContext, useCallback, useMemo } from "react"
+import React, { useEffect, useState, useContext, useCallback, useMemo, memo, Suspense, lazy } from "react"
 import { data } from './flashSale'
 import { UserContext } from "../../App"
-import Product from "./Product"
 
+// lazy loading
+const Product = lazy(() => import("./Product"))
 
-export default function FlashSale(){
+export default memo(function FlashSale(){
     const { addCart, user, goToLogin,addWishList } = useContext(UserContext)
     const [hoveredIndex,setHoveredIndex] = useState(null)
     const [allProductOpened,setAllProductOpened] = useState(false)
-    // Set the end date/time for the flash sale (e.g., 3 days from now)
-    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
-    //logic for viewing more products   
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())// Set the end date/time for the flash sale (e.g., 3 days from now)  
     const products = useMemo(() => {
         const count = allProductOpened ? data.length : 5;
-        return data.slice(0, count);
-    }, [allProductOpened])
+        return data.slice(0, count)
+    }, [allProductOpened])    //logic for viewing more products 
     
     function calculateTimeLeft() {
-    // Set your flash sale end date (year, month-1, day, hour, minute)
-    const flashSaleEnd = new Date()
-    flashSaleEnd.setDate(flashSaleEnd.getDate() + 3) // 3 days from now
-    flashSaleEnd.setHours(23, 59, 59, 0) // End at 11:59:59 PM
-
-    const difference = flashSaleEnd - new Date()
+        // Set your flash sale end date (year, month-1, day, hour, minute)
+        const flashSaleEnd = new Date()
+        flashSaleEnd.setDate(flashSaleEnd.getDate() + 3) // 3 days from now
+        flashSaleEnd.setHours(23, 59, 59, 0) // End at 11:59:59 PM
+        const difference = flashSaleEnd - new Date()
         
         return {
             days: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -34,7 +32,7 @@ export default function FlashSale(){
     }
         useEffect(() => {
         const timer = setInterval(() => {
-        setTimeLeft(calculateTimeLeft())
+        setTimeLeft(calculateTimeLeft())    
         }, 1000)
 
         return () => clearInterval(timer)
@@ -84,19 +82,21 @@ export default function FlashSale(){
                 </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 mt-5">
-                {products.map( (item,index) => (
-                    <Product 
-                        key={index}
-                        item={item}
-                        isHovered={hoveredIndex === index}
-                        onMouseEnter={() => handleMouseEnter(index)}
-                        onMouseLeave={handleMouseLeave}
-                        onAddCart={addCart}
-                        user={user}
-                        goToLogin={goToLogin}
-                        addWishList={addWishList}
-                    />
-                ))}
+                <Suspense fallback={<div>Product Loading....</div>}>
+                    {products.map( (item,index) => (
+                        <Product 
+                            key={index}
+                            item={item}
+                            isHovered={hoveredIndex === index}
+                            onMouseEnter={() => handleMouseEnter(index)}
+                            onMouseLeave={handleMouseLeave}
+                            onAddCart={addCart}
+                            user={user}
+                            goToLogin={goToLogin}
+                            addWishList={addWishList}
+                        />
+                    ))}
+                </Suspense>
             </div>
             {/* View all flash sales products */}
             <button 
@@ -108,4 +108,4 @@ export default function FlashSale(){
             </button>
         </section>
     )
-}
+})

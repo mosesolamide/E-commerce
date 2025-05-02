@@ -2,6 +2,7 @@ import React, { memo, useCallback, lazy, Suspense } from 'react'
 import { doc, updateDoc ,deleteDoc } from "firebase/firestore"
 import { db } from '../../auth/firebase'
 
+
 const Product = memo(({item,id}) => {
     const MdOutlineDelete = lazy(() => import("react-icons/md").then(module => ({ default: module.MdOutlineDelete })))
 

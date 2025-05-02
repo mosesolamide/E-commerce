@@ -1,14 +1,15 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react'
 
+//lazy
+const BestProducts = lazy(() => import('./best_product/BestProducts'))
+const Categories = lazy(() => import('./Categories'))
+const FlashSale = lazy(() => import('./flashsales/FlashSales'))
+const Explore = lazy(() => import('./explore/Explore'))
+const NewArrival = lazy(() => import('./NewArrival'))
+const Last = lazy(() => import('./Last'))
+
 export default function Dashboard() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const BestProducts = lazy(() => import('./best_product/BestProducts'))
-  const Categories = lazy(() => import('./Categories'))
-  const FlashSale = lazy(() => import('./flashsales/FlashSales'))
-  const Explore = lazy(() => import('./explore/Explore'))
-  const NewArrival = lazy(() => import('./NewArrival'))
-  const Last = lazy(() => import('./Last'))
-  
   const slides = [
     { img: "images/ads.png", alt: "Advertisement" },
     { img: "images/ads2.png", alt: "Flash Sale" }

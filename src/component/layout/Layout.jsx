@@ -1,9 +1,9 @@
-import React from "react"
+import React, { memo } from "react"
 import Header from "./Header"
 import { Outlet } from "react-router-dom"
 import Footer from "./Footer"
 
-export default function Layout(){
+export default memo(function Layout(){
     return(
         <>
             <Header />
@@ -13,4 +13,4 @@ export default function Layout(){
             <Footer />
         </>
     )
-}
+})
