@@ -1,23 +1,29 @@
-import React, { memo, useCallback, lazy, Suspense } from 'react'
+import React, { memo, useCallback, lazy, Suspense, useState } from 'react'
 import { doc, updateDoc ,deleteDoc } from "firebase/firestore"
 import { db } from '../../auth/firebase'
 
+// lazy loading
+const MdOutlineDelete = lazy(() => import("react-icons/md").then(module => ({ default: module.MdOutlineDelete })))
 
 const Product = memo(({item,id}) => {
-    const MdOutlineDelete = lazy(() => import("react-icons/md").then(module => ({ default: module.MdOutlineDelete })))
+    const [isUpdating, setIsUpdating] = useState(false)
 
-    const updateQuantity = useCallback( async (newQuantity,docId) => {
-        if (newQuantity < 1) return
+    const updateQuantity = useCallback(async (newQuantity, docId) => {
+        if (newQuantity < 1 || isUpdating) return
+        setIsUpdating(true)
+        try {
+            const updateRef = doc(db, "carts", docId)
+            await updateDoc(updateRef, { quantity: newQuantity })
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setIsUpdating(false)
+        }
+    }, [item, isUpdating])
 
-        const updateRef = doc(db, "carts", docId)
-            await updateDoc(updateRef, {
-                quantity: newQuantity
-        })
-    },[item])
-
-    const deleteItem = async (docId) =>{
+    const deleteItem = useCallback( async (docId) =>{
         await deleteDoc(doc(db, "carts", docId))
-    }
+    },[item])
 
     return(
         <tr
@@ -25,7 +31,7 @@ const Product = memo(({item,id}) => {
             font-medium py-3 px-3 shadow-sm rounded-[2px] mt-6'
         >
             <td className='flex items-center gap-1'>
-                <img src={`images/${item.imagePath}/${item.product.img}`} alt="image of product" className='w-[15px] sm:w-[17px] md:w-[20px]' />
+                <img src={`images/${item.imagePath}/${item.product.img}`} alt="image of product" loading='lazy' className='w-[15px] sm:w-[17px] md:w-[20px]' />
                 {item.product.name}
             </td>
             <td>${item.product.discountPrice || item.product.normalPrice}</td>
@@ -33,6 +39,7 @@ const Product = memo(({item,id}) => {
                 <button 
                     className='text-sm cursor-pointer font-medium' 
                     onClick={() => updateQuantity((item.quantity || 1) - 1,id)}
+                    disabled={isUpdating}
                 >
                     -
                 </button>
@@ -40,6 +47,7 @@ const Product = memo(({item,id}) => {
                 <button
                     className='text-sm cursor-pointer font-medium' 
                     onClick={() => updateQuantity((item.quantity || 1) + 1,id)}
+                    disabled={isUpdating}
                  >
                     +
                 </button>

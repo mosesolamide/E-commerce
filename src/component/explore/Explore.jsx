@@ -39,6 +39,7 @@ export default function Explore() {
                     src={`images/explore_product/${items.img}`} 
                     alt={items.name} 
                     className="w-full h-full object-contain" 
+                    loading="lazy"
                   />  
                 </div>
               </div>

@@ -31,6 +31,7 @@ const Product = memo(({
               src={`images/flash_sales/${item.img}`} 
               alt={item.name} 
               className="w-full h-full object-contain" 
+              loading="lazy"
             />  
           </div>
         </div>
