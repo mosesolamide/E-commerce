@@ -19,7 +19,7 @@ export default memo(function Header() {
 
     const menuBar = () => {
         document.getElementById("menuDropBar").classList.toggle("hidden")
-    };
+    }
 
     return (
         <header className="flex justify-around text-xs items-center py-3 border-b-[1px] border-gray-300 relative">
@@ -40,8 +40,8 @@ export default memo(function Header() {
                     <li className="mb-1 md:m-0">
                         <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/about">About</NavLink>
                     </li>
-                    <li>
-                        <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/signup">{user? "Logout": "Signup" }</NavLink>
+                    <li className={user? "hidden" : ""}>
+                        <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/signup">Signup</NavLink>
                     </li>
                 </ul>
                 <ul className="flex gap-2 items-center">

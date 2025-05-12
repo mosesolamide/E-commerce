@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { UserContext } from '../App'
 
-
+const FcGoogle = lazy(() => import("react-icons/fc").then(module => ({ default: module.FcGoogle })))
 export default function SignUp() {
     const { signup,handleChange,userData,signUpWithEmail,errorMessage } = useContext(UserContext)
-    const FcGoogle = lazy(() => import("react-icons/fc").then(module => ({ default: module.FcGoogle })))
 
     return(
         <form className='flex flex-col justify-center items-center mt-10'>

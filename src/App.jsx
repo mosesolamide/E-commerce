@@ -1,7 +1,13 @@
 import React, { useState, createContext, useEffect, useCallback, Suspense, useMemo } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { createRoot } from 'react-dom/client'
+import { 
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation
+} from 'react-router-dom'
 import { auth, googleProvider } from './auth/firebase'
-import { useLocation } from 'react-router-dom'
 import { 
   signInWithPopup,
   onAuthStateChanged,
@@ -10,10 +16,11 @@ import {
   signInWithEmailAndPassword,
   updateProfile
 } from 'firebase/auth'
-import { addDoc, collection, onSnapshot, query, where } from "firebase/firestore"
+import { addDoc, collection, onSnapshot, query, where } from 'firebase/firestore'
 import { db } from './auth/firebase'
+import "./index.css"
 
-// Lazy load components
+// Lazy loaded components
 const Layout = React.lazy(() => import('./component/layout/Layout'))
 const SignUp = React.lazy(() => import('./auth/SignUp'))
 const Login = React.lazy(() => import('./auth/Login'))
@@ -21,7 +28,7 @@ const Dashboard = React.lazy(() => import('./component/Dashboard'))
 const AccountLayout = React.lazy(() => import('./component/ManageAccount/AccounLayout'))
 const About = React.lazy(() => import('./component/About'))
 const ContactUs = React.lazy(() => import('./component/ContactUs'))
-const Wishlist = React.lazy(() => import('./WishList.jsx/WishList'))
+const Wishlist = React.lazy(() => import('./WishList.jsx/Wishlist'))
 const Carts = React.lazy(() => import('./component/cart/Carts'))
 const Payment = React.lazy(() => import('./component/Payment'))
 const MyProfile = React.lazy(() => import('./component/ManageAccount/Myprofile'))
@@ -30,20 +37,20 @@ export const UserContext = createContext()
 
 function App() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(false)
-  const [user, setUser] = useState(null) 
+  const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [wishlist, setWishList] = useState([])  
-  const [totalPrice, setTotalPrice] = useState(null) 
+  const [wishlist, setWishList] = useState([])
+  const [totalPrice, setTotalPrice] = useState(0)
   const [userData, setUserData] = useState({
     name: "",
     password: "",
     email: ""
   })
-  const location = useLocation()
 
-  const userMoreDeatils = async (detail) => {
+  const userMoreDetails = async (detail) => {
     try {
       await addDoc(collection(db, "userMoreDetails"), {
         name: detail.displayName, 
@@ -59,45 +66,45 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(auth.currentUser)
-      const currentPath = location.pathname;
+      setUser(currentUser)
+      const currentPath = location.pathname
       if (currentUser && (currentPath === "/login" || currentPath === "/signup")) {
         navigate("/")
       }
     })
     return () => unsubscribe()
-  }, [navigate, location.pathname])
+  }, [location.pathname, navigate])
 
-  const signout = () => {
+  const signout = useCallback(() => {
     signOut(auth)
       .then(() => {
-        alert("You have successfully Logout")
+        alert("You have successfully logged out")
         navigate("/login")
-        setIsUserOpen(true)
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.error(error.message)
       })
-  }
+  }, [navigate])
 
-  const signup = async () => {
+  const signup = useCallback(async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider)
       setUser(result.user)
-      userMoreDeatils(auth.currentUser)
+      await userMoreDetails(result.user)
     } catch (err) {
       console.error(err)
     }
-  }
+  }, [])
 
-  const signUpWithEmail = async () => {
+  const signUpWithEmail = useCallback(async () => {
     try {
       setErrorMessage(null)
       if (!userData.email || !userData.password || !userData.name) {
-        throw new Error('All fields are required');
+        throw new Error('All fields are required')
       }
 
       if (userData.password.length < 6) {
-        throw new Error('Password must be at least 6 characters');
+        throw new Error('Password must be at least 6 characters')
       }
 
       const userCredential = await createUserWithEmailAndPassword(
@@ -109,12 +116,11 @@ function App() {
       await updateProfile(auth.currentUser, {
         displayName: userData.name
       })
+
       setUser(auth.currentUser)
-      userMoreDeatils(auth.currentUser)
-      setErrorMessage(null)
+      await userMoreDetails(auth.currentUser)
     } catch (error) {
       let errorMessage = 'Signup failed'
-
       switch (error.code) {
         case 'auth/email-already-in-use':
           errorMessage = 'Email already in use'
@@ -125,17 +131,14 @@ function App() {
         case 'auth/weak-password':
           errorMessage = 'Password is too weak'
           break
-        case 'auth/operation-not-allowed':
-          errorMessage = 'Email/password accounts are not enabled'
-          break
         default:
           errorMessage = error.message || 'Signup failed'
       }
       setErrorMessage(errorMessage)
     }
-  }
+  }, [userData])
 
-  const signInWithEmail = async () => {
+  const signInWithEmail = useCallback(async () => {
     try {
       setErrorMessage(null)
       if (!userData.email || !userData.password) {
@@ -148,16 +151,11 @@ function App() {
         userData.password
       )
       setUser(userCredential.user)
-      setErrorMessage(null)
     } catch (error) {
       let errorMessage = 'Login failed'
-
       switch (error.code) {
         case 'auth/invalid-email':
           errorMessage = 'Invalid email address'
-          break
-        case 'auth/user-disabled':
-          errorMessage = 'Account disabled'
           break
         case 'auth/user-not-found':
           errorMessage = 'User not found'
@@ -165,26 +163,17 @@ function App() {
         case 'auth/wrong-password':
           errorMessage = 'Incorrect password'
           break
-        case 'auth/too-many-requests':
-          errorMessage = 'Too many attempts. Try again later'
-          break
-        case 'auth/invalid-credential':
-          errorMessage = 'User dont have an account'
-          break
         default:
           errorMessage = error.message || 'Login failed'
       }
       setErrorMessage(errorMessage)
     }
-  }
+  }, [userData])
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target
-    setUserData((prev) => ({
-      ...prev,
-      [name]: value
-    }))
-  }
+    setUserData(prev => ({ ...prev, [name]: value }))
+  }, [])
 
   const addCart = useCallback(async (item, imagePath) => {
     if (!user) {
@@ -195,11 +184,11 @@ function App() {
       await addDoc(collection(db, "carts"), {
         product: item,
         uid: user.uid,
-        imagePath: imagePath,
+        imagePath,
         quantity: 1,
         createdAt: new Date()
       })
-      alert("Successfully Added To Cart")
+      alert("Successfully added to cart")
     } catch (e) {
       console.error("Error adding to cart:", e)
     }
@@ -214,61 +203,49 @@ function App() {
       await addDoc(collection(db, "wishlist"), {
         product: item,
         uid: user.uid,
-        imagePath: imagePath,
+        imagePath,
         createdAt: new Date()
       })
-      alert("Successfully Added To Wishlist")
+      alert("Successfully added to wishlist")
     } catch (e) {
       console.error("Error adding to wishlist:", e)
     }
   }, [user, navigate])
 
   useEffect(() => {
-    if (!user || !user.uid) {
+    if (!user?.uid) {
       setCart([])
       setLoading(true)
       return
     }
 
-    const cartsRef = collection(db, "carts")
-    const q = query(cartsRef, where("uid", "==", user.uid))
-
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const cartItem = []
-      querySnapshot.forEach((doc) => {
-        cartItem.push({
-          id: doc.id,
-          ...doc.data()
-        })
-      })
-      setCart(cartItem)
-      setLoading(false)
-    })
+    const unsubscribe = onSnapshot(
+      query(collection(db, "carts"), where("uid", "==", user.uid)),
+      (snapshot) => {
+        const cartItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+        setCart(cartItems)
+        setLoading(false)
+      }
+    )
 
     return () => unsubscribe()
   }, [user])
 
   useEffect(() => {
-    if (!user || !user.uid) {
+    if (!user?.uid) {
       setWishList([])
       setLoading(true)
       return
     }
 
-    const wishListRef = collection(db, "wishlist")
-    const q = query(wishListRef, where("uid", "==", user.uid))
-
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const wishListItem = []
-      querySnapshot.forEach((doc) => {
-        wishListItem.push({
-          id: doc.id,
-          ...doc.data()
-        })
-      })
-      setWishList(wishListItem)
-      setLoading(false)
-    })
+    const unsubscribe = onSnapshot(
+      query(collection(db, "wishlist"), where("uid", "==", user.uid)),
+      (snapshot) => {
+        const wishlistItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+        setWishList(wishlistItems)
+        setLoading(false)
+      }
+    )
 
     return () => unsubscribe()
   }, [user])
@@ -276,13 +253,11 @@ function App() {
   useEffect(() => {
     const total = cart.reduce((acc, item) => {
       const price = item.product?.discountPrice || item.product?.normalPrice || 0
-      const qty = item.quantity || 1
-      return acc + price * qty
+      return acc + (price * (item.quantity || 1))
     }, 0)
     setTotalPrice(total)
   }, [cart])
 
-  // context value
   const userContextValue = useMemo(() => ({
     signup,
     signout,
@@ -299,29 +274,32 @@ function App() {
     wishlist,
     totalPrice,
     auth
-  }), [user, cart, wishlist, loading, totalPrice])
+  }), [
+    user, cart, wishlist, loading, totalPrice, userData,
+    errorMessage, signup, signout, handleChange,
+    signUpWithEmail, signInWithEmail, addCart, addWishList
+  ])
 
   return (
-    <UserContext.Provider value={userContextValue}
-    >
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path='/' element={<Layout />} >
-            <Route index element={<Dashboard />} />
-            <Route path='signup' element={<SignUp />} />
-            <Route path='login' element={<Login />} />
-            <Route path='payment' element={<Payment />} />
-            <Route path='/contact' element={<ContactUs />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/carts' element={<Carts />} />
-            <Route path='/wishlist' element={<Wishlist />} />
-            <Route path='/manageaccount' element={<AccountLayout />} >
-              <Route index element={<MyProfile />} />
+      <UserContext.Provider value={userContextValue}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="login" element={<Login />} />
+              <Route path="payment" element={<Payment />} />
+              <Route path="contact" element={<ContactUs />} />
+              <Route path="about" element={<About />} />
+              <Route path="carts" element={<Carts />} />
+              <Route path="wishlist" element={<Wishlist />} />
+              <Route path="manageaccount" element={<AccountLayout />}>
+                <Route index element={<MyProfile />} />
+              </Route>
             </Route>
-          </Route>
-        </Routes>
-      </Suspense>
-    </UserContext.Provider>
+          </Routes>
+        </Suspense>
+      </UserContext.Provider>
   )
 }
 
