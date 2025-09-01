@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Product = lazy(() => import("./Products"));
 const GiShoppingCart = lazy(() =>
   import("react-icons/gi").then(module => ({ default: module.GiShoppingCart }))
-);
+)
 
 export default function Carts() {
   const { user, cart, loading, totalPrice } = useContext(UserContext);
