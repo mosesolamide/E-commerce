@@ -8,7 +8,7 @@ export default function SignUp() {
     const { signup,handleChange,userData,signUpWithEmail,errorMessage } = useContext(UserContext)
 
     return(
-        <form className='flex flex-col justify-center items-center mt-10'>
+        <form className='flex flex-col justify-center items-center min-w-[350px] mt-10'>
             <div className='mb-5'>
                 <h1 className='font-medium'>Create an account</h1>
                 <p className='text-xs md:text-sm'>Enter your details below</p>
@@ -18,7 +18,7 @@ export default function SignUp() {
                 type="text" 
                 placeholder='Fullname' 
                 name='name'
-                className='border-b-1 w-[200px] mb-4 border-gray-400 text-xs py-3 outline-0' 
+                className='border-b-1 w-full mb-4 border-gray-400 py-3 outline-0' 
                 value={userData.name} 
                 onChange={handleChange}
                 required
@@ -28,7 +28,7 @@ export default function SignUp() {
                 placeholder='Email' 
                 name='email'
                 autoComplete="username" 
-                className='border-b-1 w-[200px] mb-4 border-gray-400 text-xs py-3 outline-0' 
+                className='border-b-1 w-full mb-4 border-gray-400 py-3 outline-0' 
                 value={userData.email} 
                 onChange={handleChange}
                 required
@@ -38,13 +38,13 @@ export default function SignUp() {
                 placeholder='Password' 
                 name='password'
                 autoComplete="new-password" 
-                className='border-b-1 w-[200px] mb-4 border-gray-400 text-xs py-3 outline-0'
+                className='border-b-1 w-full mb-4 border-gray-400 py-3 outline-0'
                 value={userData.password} 
                 onChange={handleChange}
                 required
             />
             <button 
-                className='bg-red-600 text-white w-[200px] py-2 mb-4 rounded-2 cursor-pointer'
+                className='bg-red-600 text-white w-full py-2 mb-4 rounded-2 cursor-pointer'
                 type='button'
                 onClick={signUpWithEmail}
             >
@@ -52,7 +52,7 @@ export default function SignUp() {
             </button>
             <button
                 className='flex gap-4 items-center border-[1px] border-gray-300 
-                justify-center py-2 w-[200px] cursor-pointer rounded-2'
+                justify-center py-2 w-full cursor-pointer rounded-2'
                 onClick={signup}
                 type='button'
              >

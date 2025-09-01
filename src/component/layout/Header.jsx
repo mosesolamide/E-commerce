@@ -1,141 +1,137 @@
-import React, { lazy, Suspense, memo, useContext, useState } from "react"
-import { NavLink, Link } from "react-router-dom"
-import { UserContext } from '../../App'
+import React, { lazy, Suspense, memo, useContext, useState } from "react";
+import { NavLink, Link } from "react-router-dom";
+import { UserContext } from "../../App";
 
-// Lazy load all icons
-const IoIosMenu = lazy(() => import("react-icons/io").then(mod => ({ default: mod.IoIosMenu })))
-const IoIosLogOut = lazy(() => import("react-icons/io").then(mod => ({ default: mod.IoIosLogOut })))
-const IoCartOutline = lazy(() => import("react-icons/io5").then(mod => ({ default: mod.IoCartOutline })))
-const FaUserCircle = lazy(() => import("react-icons/fa").then(mod => ({ default: mod.FaUserCircle })))
-const FiUser = lazy(() => import("react-icons/fi").then(mod => ({ default: mod.FiUser })))
-const MdOutlineCancel = lazy(() => import("react-icons/md").then(mod => ({ default: mod.MdOutlineCancel })))
-const CiStar = lazy(() => import("react-icons/ci").then(mod => ({ default: mod.CiStar })))
-const CiHeart = lazy(() => import("react-icons/ci").then(mod => ({ default: mod.CiHeart })))
-const PiHandbagThin = lazy(() => import("react-icons/pi").then(mod => ({ default: mod.PiHandbagThin })))
+// Lazy load icons
+const IoIosMenu = lazy(() => import("react-icons/io").then(mod => ({ default: mod.IoIosMenu })));
+const IoIosLogOut = lazy(() => import("react-icons/io").then(mod => ({ default: mod.IoIosLogOut })));
+const IoCartOutline = lazy(() => import("react-icons/io5").then(mod => ({ default: mod.IoCartOutline })));
+const FaUserCircle = lazy(() => import("react-icons/fa").then(mod => ({ default: mod.FaUserCircle })));
+const FiUser = lazy(() => import("react-icons/fi").then(mod => ({ default: mod.FiUser })));
+const MdOutlineCancel = lazy(() => import("react-icons/md").then(mod => ({ default: mod.MdOutlineCancel })));
+const CiStar = lazy(() => import("react-icons/ci").then(mod => ({ default: mod.CiStar })));
+const CiHeart = lazy(() => import("react-icons/ci").then(mod => ({ default: mod.CiHeart })));
+const PiHandbagThin = lazy(() => import("react-icons/pi").then(mod => ({ default: mod.PiHandbagThin })));
 
 export default memo(function Header() {
-    const { user, signout, cart, wishlist } = useContext(UserContext)
-    const [isUserOpen, setIsUserOpen] = useState(true)
+  const { user, signout, cart, wishlist } = useContext(UserContext);
+  const [isUserOpen, setIsUserOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const menuBar = () => {
-        document.getElementById("menuDropBar").classList.toggle("hidden")
-    }
+  return (
+    <header className="flex justify-between items-center px-4 md:px-10 py-4 border-b border-gray-300 relative">
+      
+      {/* Logo */}
+      <Link to="/" className="font-bold text-base md:text-lg">
+        Exclusive
+      </Link>
 
-    return (
-        <header className="flex justify-around text-xs items-center py-3 border-b-[1px] border-gray-300 relative">
-            <h1 className="font-medium text-xs md:text-sm">Exclusive</h1>
-            <nav className="flex gap-10 md:gap-30">
-                <span className="md:hidden flex justify-center items-center" onClick={menuBar} id="icon">
-                    <Suspense fallback={<div>...</div>}>
-                        <IoIosMenu size={15} />
-                    </Suspense>
-                </span>
-                <ul className="hidden absolute top-8 md:top-0 px-2 py-1 rounded-2 bg-gray-100 md:bg-white md:sticky md:flex md:gap-6 md:items-center text-xs md:text-sm font-medium" id="menuDropBar">
-                    <li className="mb-1 md:m-0">
-                        <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/">Home</NavLink>
-                    </li>
-                    <li className="mb-1 md:m-0">
-                        <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/contact">Contact</NavLink>
-                    </li>
-                    <li className="mb-1 md:m-0">
-                        <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/about">About</NavLink>
-                    </li>
-                    <li className={user? "hidden" : ""}>
-                        <NavLink className={({ isActive }) => isActive ? 'md:border-b-[1.8px] border-gray-300' : ''} to="/signup">Signup</NavLink>
-                    </li>
-                </ul>
-                <ul className="flex gap-2 items-center">
-                    <li className="cursor-pointer">
-                        {user && (
-                            <div className="relative">
-                                <Link to="/wishlist">
-                                    <Suspense fallback={<div>...</div>}>
-                                        <CiHeart className="text-[15px] sm:text-[20px] md:text-[25px]" />
-                                    </Suspense>
-                                    {
-                                        wishlist.length > 0 
-                                        &&<span className="bg-red-600 text-white text-[8px] md:text-[10px] rounded-[50%] w-[10px] md:w-[13px] h-[10px] md:h-[13px] absolute top-[-4px] md:top-0 right-[-2px] md:right-0 flex justify-center items-center">
-                                            {wishlist.length}
-                                        </span>
-                                    }
-                                </Link>
-                            </div>
-                        )}
-                    </li>
-                    <li className="cursor-pointer relative">
-                        {user && (
-                            <div className="relative">
-                                <Link to='/carts'>
-                                    <Suspense fallback={<div>...</div>}>
-                                        <IoCartOutline className="text-[15px] sm:text-[20px] md:text-[25px]" />
-                                    </Suspense>
-                                    {
-                                        cart.length > 0 && 
-                                        <span className="bg-red-600 text-white text-[8px] md:text-[10px] rounded-[50%] w-[10px] md:w-[13px] h-[10px] md:h-[13px] absolute top-[-4px] md:top-0 right-[-2px] md:right-0 flex justify-center items-center">
-                                            {cart.length}
-                                        </span>
-                                    }
-                                </Link>
-                            </div>
-                        )}
-                    </li>
-                    <li onClick={() => setIsUserOpen(prev => !prev)} className="cursor-pointer text-[#DB4444]">
-                        {
-                            user && user.photoURL ? (
-                                <img src={user.photoURL} alt="your image" className="rounded-[50%] w-[15px] sm:w-[20px] h-[15px] sm:h-[20px]" />
-                            ) : user && !user.photoURL ? (
-                                <Suspense fallback={<div>...</div>}>
-                                    <FaUserCircle className="text-[15px] sm:text-[20px] md:text-[25px]" />
-                                </Suspense>
-                            ) : null
-                        }
-                    </li>
-                </ul>
-                <div className="relative">
-                    <ul className={`absolute right-[3px] top-[39px] flex-col text-xs w-[130px] p-2 bg-black/30 backdrop-blur-md text-white rounded-2 z-50 ${isUserOpen || !user ? "hidden" : ""}`}>
-                        <li className="mb-3">
-                            <Link className="flex gap-1 items-center" to="/manageaccount">
-                                <Suspense fallback={<div>...</div>}>
-                                    <FiUser size={13} />
-                                </Suspense>
-                                Manage Account
-                            </Link>
-                        </li>
-                        <li className="mb-3">
-                            <Link className="flex gap-1 items-center">
-                                <Suspense fallback={<div>...</div>}>
-                                    <PiHandbagThin size={13} />
-                                </Suspense>
-                                My Order
-                            </Link>
-                        </li>
-                        <li className="mb-3">
-                            <Link className="flex gap-1 items-center">
-                                <Suspense fallback={<div>...</div>}>
-                                    <MdOutlineCancel size={13} />
-                                </Suspense>
-                                My Cancellation
-                            </Link>
-                        </li>
-                        <li className="mb-3">
-                            <Link className="flex gap-1 items-center">
-                                <Suspense fallback={<div>...</div>}>
-                                    <CiStar size={13} />
-                                </Suspense>
-                                My Reviews
-                            </Link>
-                        </li>
-                        <li className="mb-1">
-                            <Link className="flex gap-1 items-center" onClick={signout}>
-                                <Suspense fallback={<div>...</div>}>
-                                    <IoIosLogOut size={13} />
-                                </Suspense>
-                                Logout
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-    );
+      {/* Desktop Nav */}
+      <nav className="hidden md:flex gap-6 text-sm font-medium">
+        <NavLink to="/" className={({ isActive }) => isActive ? "border-b-2 border-gray-600" : ""}>Home</NavLink>
+        <NavLink to="/contact" className={({ isActive }) => isActive ? "border-b-2 border-gray-600" : ""}>Contact</NavLink>
+        <NavLink to="/about" className={({ isActive }) => isActive ? "border-b-2 border-gray-600" : ""}>About</NavLink>
+        {!user && <NavLink to="/signup" className={({ isActive }) => isActive ? "border-b-2 border-gray-600" : ""}>Signup</NavLink>}
+      </nav>
+
+      {/* Right Section */}
+      <div className="flex items-center gap-4">
+        {/* Wishlist */}
+        {user && (
+          <Link to="/wishlist" className="relative">
+            <Suspense fallback={<div>...</div>}>
+              <CiHeart className="text-[20px] md:text-[24px]" />
+            </Suspense>
+            {wishlist.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] w-4 h-4 rounded-full flex justify-center items-center">
+                {wishlist.length}
+              </span>
+            )}
+          </Link>
+        )}
+
+        {/* Cart */}
+        {user && (
+          <Link to="/carts" className="relative">
+            <Suspense fallback={<div>...</div>}>
+              <IoCartOutline className="text-[20px] md:text-[24px]" />
+            </Suspense>
+            {cart.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] w-4 h-4 rounded-full flex justify-center items-center">
+                {cart.length}
+              </span>
+            )}
+          </Link>
+        )}
+
+        {/* Profile */}
+        {user && (
+          <div className="relative">
+            <button onClick={() => setIsUserOpen(prev => !prev)} className="cursor-pointer">
+              {user.photoURL ? (
+                <img src={user.photoURL} alt="profile" className="w-6 h-6 rounded-full" />
+              ) : (
+                <Suspense fallback={<div>...</div>}>
+                  <FaUserCircle className="text-[22px] text-[#DB4444]" />
+                </Suspense>
+              )}
+            </button>
+
+            {/* Dropdown */}
+            {!isUserOpen ? null : (
+              <ul className="absolute right-0 top-6 flex-col text-xs w-[150px] p-2 bg-black/80 backdrop-blur-md text-white rounded z-50 space-y-2">
+                <li>
+                  <Link className="flex items-center gap-2" to="/manageaccount">
+                    <Suspense fallback={<div>...</div>}><FiUser size={14} /></Suspense>
+                    Manage Account
+                  </Link>
+                </li>
+                <li>
+                  <Link className="flex items-center gap-2" to="/orders">
+                    <Suspense fallback={<div>...</div>}><PiHandbagThin size={14} /></Suspense>
+                    My Orders
+                  </Link>
+                </li>
+                <li>
+                  <Link className="flex items-center gap-2" to="/cancellations">
+                    <Suspense fallback={<div>...</div>}><MdOutlineCancel size={14} /></Suspense>
+                    My Cancellations
+                  </Link>
+                </li>
+                <li>
+                  <Link className="flex items-center gap-2" to="/reviews">
+                    <Suspense fallback={<div>...</div>}><CiStar size={14} /></Suspense>
+                    My Reviews
+                  </Link>
+                </li>
+                <li>
+                  <button onClick={signout} className="flex items-center gap-2 w-full text-left">
+                    <Suspense fallback={<div>...</div>}><IoIosLogOut size={14} /></Suspense>
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* Mobile Menu */}
+        <button onClick={() => setIsMenuOpen(prev => !prev)} className="md:hidden">
+          <Suspense fallback={<div>...</div>}>
+            <IoIosMenu size={22} />
+          </Suspense>
+        </button>
+      </div>
+
+      {/* Mobile Nav */}
+      {isMenuOpen && (
+        <ul className="absolute top-16 left-0 w-full bg-gray-100 p-4 flex flex-col gap-4 text-sm font-medium md:hidden">
+          <NavLink to="/" onClick={() => setIsMenuOpen(false)}>Home</NavLink>
+          <NavLink to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</NavLink>
+          <NavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</NavLink>
+          {!user && <NavLink to="/signup" onClick={() => setIsMenuOpen(false)}>Signup</NavLink>}
+        </ul>
+      )}
+    </header>
+  );
 });

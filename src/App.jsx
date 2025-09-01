@@ -1,5 +1,4 @@
 import React, { useState, createContext, useEffect, useCallback, Suspense, useMemo } from 'react'
-import { createRoot } from 'react-dom/client'
 import { 
   BrowserRouter,
   Routes,
@@ -86,15 +85,15 @@ function App() {
       })
   }, [navigate])
 
-  const signup = useCallback(async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider)
-      setUser(result.user)
-      await userMoreDetails(result.user)
-    } catch (err) {
-      console.error(err)
-    }
-  }, [])
+    const signup = useCallback(async () => {
+      try {
+        const result = await signInWithPopup(auth, googleProvider)
+        setUser(result.user)
+        await userMoreDetails(result.user)
+      } catch (err) {
+        console.error(err)
+      }
+    }, [])
 
   const signUpWithEmail = useCallback(async () => {
     try {
